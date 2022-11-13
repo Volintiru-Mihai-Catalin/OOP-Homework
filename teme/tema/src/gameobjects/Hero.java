@@ -1,6 +1,7 @@
-package gameUtils;
+package gameobjects;
 
 import fileio.CardInput;
+import gameobjects.Card;
 import utils.Constants;
 
 public class Hero extends Card {

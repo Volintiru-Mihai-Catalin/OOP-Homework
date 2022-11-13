@@ -1,7 +1,8 @@
-package gameUtils;
+package gameobjects;
 
 
 import fileio.CardInput;
+import gameobjects.Card;
 import utils.Constants;
 
 public class Minion extends Card {
