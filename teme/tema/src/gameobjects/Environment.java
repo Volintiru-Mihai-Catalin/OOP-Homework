@@ -1,13 +1,12 @@
 package gameobjects;
 
 import fileio.CardInput;
-import gameobjects.Card;
 import utils.Constants;
 
-public class Environment extends Card {
+public final class Environment extends Card {
 
     private final CardInput card;
-    public Environment(CardInput card) {
+    public Environment(final CardInput card) {
         this.card = card;
     }
 

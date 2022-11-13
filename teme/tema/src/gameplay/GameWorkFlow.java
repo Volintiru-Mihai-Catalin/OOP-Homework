@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import gameobjects.Card;
 import gameobjects.CardsConvertor;
-import fileio.*;
+import fileio.CardInput;
+import fileio.Input;
+import fileio.GameInput;
+import fileio.ActionsInput;
 import utils.Constants;
 import utils.Functions;
 
@@ -13,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class GameWorkFlow {
-    private static final ObjectMapper mapper = new ObjectMapper();
+public final class GameWorkFlow {
+    private static final ObjectMapper MAPPER = new ObjectMapper();
     private final Input inputData;
     private final ArrayList<GameInput> gameInput;
     private ArrayList<Card> deckPlayerOne;
@@ -24,28 +27,30 @@ public class GameWorkFlow {
 
     private ArrayList<Card> heroPlayerOne = new ArrayList<Card>();
     private ArrayList<Card> heroPlayerTwo = new ArrayList<Card>();
-    static int turn = 0;
-    public GameWorkFlow(Input inputData) {
+    private static int turn = 0;
+    public GameWorkFlow(final Input inputData) {
         this.inputData = inputData;
         gameInput = inputData.getGames();
     }
 
-    public void startAllGames(ArrayNode output) {
+    public void startAllGames(final ArrayNode output) {
         for (GameInput game : gameInput) {
             startGame(game);
             for (ActionsInput action : game.getActions()) {
-                performAction(action, output, game);
+                performAction(action, output);
             }
         }
     }
 
-    private void startGame(GameInput game) {
+    private void startGame(final GameInput game) {
         turn = game.getStartGame().getStartingPlayer();
         int playerOneIdx = game.getStartGame().getPlayerOneDeckIdx();
         int playerTwoIdx = game.getStartGame().getPlayerTwoDeckIdx();
 
-        deckPlayerOne = CardsConvertor.convertCards(inputData.getPlayerOneDecks().getDecks().get(playerOneIdx));
-        deckPlayerTwo = CardsConvertor.convertCards(inputData.getPlayerTwoDecks().getDecks().get(playerTwoIdx));
+        ArrayList<CardInput> cardIOne = inputData.getPlayerOneDecks().getDecks().get(playerOneIdx);
+        ArrayList<CardInput> cardITwo =  inputData.getPlayerTwoDecks().getDecks().get(playerTwoIdx);
+        deckPlayerOne = CardsConvertor.convertCards(cardIOne);
+        deckPlayerTwo = CardsConvertor.convertCards(cardITwo);
 
         ArrayList<CardInput> heroOne = new ArrayList<CardInput>();
         heroOne.add(game.getStartGame().getPlayerOneHero());
@@ -62,18 +67,20 @@ public class GameWorkFlow {
         addCardToHandFromDeck(2);
     }
 
-    private void performAction(ActionsInput action, ArrayNode output, GameInput game) {
-        ObjectNode node = mapper.createObjectNode();
+    private void performAction(final ActionsInput action, final ArrayNode output) {
+        ObjectNode node = MAPPER.createObjectNode();
         node.put("command", action.getCommand());
 
         switch (action.getCommand()) {
             case (Constants.GETPLAYERDECK) -> {
                 node.put("playerIdx", action.getPlayerIdx());
-                node.set("output", Functions.createArrayNodeFromCards(getPlayerDeck(action.getPlayerIdx())));
+                node.set("output",
+                        Functions.createArrayNodeFromCards(getPlayerDeck(action.getPlayerIdx())));
             }
             case (Constants.GETPLAYERHERO) -> {
                 node.put("playerIdx", action.getPlayerIdx());
-                node.put("output", Functions.createNodeFromHeroCard(getPlayerHero(action.getPlayerIdx()).get(0)));
+                node.set("output",
+                    Functions.createNodeFromHeroCard(getPlayerHero(action.getPlayerIdx()).get(0)));
             }
             case (Constants.GETPLAYERTURN) -> node.put("output", turn);
             default -> {
@@ -83,21 +90,21 @@ public class GameWorkFlow {
         output.add(node);
     }
 
-    private ArrayList<Card> getPlayerDeck(int playerIdx) {
+    private ArrayList<Card> getPlayerDeck(final int playerIdx) {
         if (playerIdx == 2) {
             return deckPlayerTwo;
         }
         return deckPlayerOne;
     }
 
-    private ArrayList<Card> getPlayerHero(int playerIdx) {
+    private ArrayList<Card> getPlayerHero(final int playerIdx) {
         if (playerIdx == 2) {
             return heroPlayerTwo;
         }
         return heroPlayerOne;
     }
 
-    private void addCardToHandFromDeck(int playerIdx) {
+    private void addCardToHandFromDeck(final int playerIdx) {
         Card card;
         if (playerIdx == 1) {
             if (deckPlayerOne.size() > 0) {

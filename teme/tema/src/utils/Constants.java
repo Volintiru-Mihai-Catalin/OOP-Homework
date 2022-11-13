@@ -1,36 +1,37 @@
 package utils;
 
-public class Constants {
-    public Constants() {
+public final class Constants {
+    private Constants() {
     }
-    public final static String GETPLAYERDECK = "getPlayerDeck";
-    public final static String GETPLAYERHERO = "getPlayerHero";
-    public final static String GETPLAYERTURN = "getPlayerTurn";
-    public final static String SENTINEL = "Sentinel";
-    public final static String BERSERKER = "Berserker";
-    public final static String GOLIATH = "Goliath";
-    public final static String WARDEN = "Warden";
-    public final static String THERIPPER = "The Ripper";
-    public final static String MIRAJ = "Miraj";
-    public final static String THECURSEDONE = "The Cursed One";
-    public final static String DISCIPLE = "Disciple";
-    public final static String FIRESTORM = "Firestorm";
-    public final static String WINTERFELL = "Winterfell";
-    public final static String HEARTHOUND = "Heart Hound";
-    public final static String MINION = "Minion";
-    public final static String ENVIRONMENT = "Environment";
-    public final static String HERO = "Hero";
-    public final static String TANK = "Tank";
-    public final static String GODSPLAN = "God's Plan";
-    public final static String WEAKKNEES = "Weak Knees";
-    public final static String SKYJACK = "Skyjack";
-    public final static String SHAPESHIFT = "Shapeshift";
-    public final static String LORDROYCE = "Lord Royce";
-    public final static String EMPRESSTHORINA = "Empress Thorina";
-    public final static String KINGMUDFACE = "King Mudface";
-    public final static String GENERALKOCIORAW = "General Kocioraw";
-    public final static String SUBZERO = "Sub-Zero";
-    public final static String LOWBLOW = "Low Blow";
-    public final static String EARTHBORN = "Earth Born";
-    public final static String BLOODTHIRST = "Blood Thirst";
+    public static final String GETPLAYERDECK = "getPlayerDeck";
+    public static final String GETPLAYERHERO = "getPlayerHero";
+    public static final String GETPLAYERTURN = "getPlayerTurn";
+    public static final String SENTINEL = "Sentinel";
+    public static final String BERSERKER = "Berserker";
+    public static final String GOLIATH = "Goliath";
+    public static final String WARDEN = "Warden";
+    public static final String THERIPPER = "The Ripper";
+    public static final String MIRAJ = "Miraj";
+    public static final String THECURSEDONE = "The Cursed One";
+    public static final String DISCIPLE = "Disciple";
+    public static final String FIRESTORM = "Firestorm";
+    public static final String WINTERFELL = "Winterfell";
+    public static final String HEARTHOUND = "Heart Hound";
+    public static final String MINION = "Minion";
+    public static final String ENVIRONMENT = "Environment";
+    public static final String HERO = "Hero";
+    public static final String TANK = "Tank";
+    public static final String GODSPLAN = "God's Plan";
+    public static final String WEAKKNEES = "Weak Knees";
+    public static final String SKYJACK = "Skyjack";
+    public static final String SHAPESHIFT = "Shapeshift";
+    public static final String LORDROYCE = "Lord Royce";
+    public static final String EMPRESSTHORINA = "Empress Thorina";
+    public static final String KINGMUDFACE = "King Mudface";
+    public static final String GENERALKOCIORAW = "General Kocioraw";
+    public static final String SUBZERO = "Sub-Zero";
+    public static final String LOWBLOW = "Low Blow";
+    public static final String EARTHBORN = "Earth Born";
+    public static final String BLOODTHIRST = "Blood Thirst";
+    public static final Integer HEROHP = 30;
 }

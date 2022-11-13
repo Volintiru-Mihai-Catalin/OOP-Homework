@@ -2,16 +2,15 @@ package gameobjects;
 
 
 import fileio.CardInput;
-import gameobjects.Card;
 import utils.Constants;
 
-public class Minion extends Card {
+public final class Minion extends Card {
 
     private final String power;
     private final CardInput card;
     private final Integer row;
 
-    public Minion(CardInput card) {
+    public Minion(final CardInput card) {
         this.card = card;
         switch (card.getName()) {
             case (Constants.GOLIATH), (Constants.WARDEN) -> power = "Tank";
@@ -22,8 +21,10 @@ public class Minion extends Card {
             default -> power = null;
         }
         switch (card.getName()) {
-            case (Constants.GOLIATH), (Constants.WARDEN), (Constants.THERIPPER), (Constants.MIRAJ) -> row = 1;
-            case (Constants.SENTINEL), (Constants.BERSERKER), (Constants.THECURSEDONE), (Constants.DISCIPLE) -> row = 0;
+            case (Constants.GOLIATH), (Constants.WARDEN), (Constants.THERIPPER),
+                 (Constants.MIRAJ) -> row = 1;
+            case (Constants.SENTINEL), (Constants.BERSERKER), (Constants.THECURSEDONE),
+                 (Constants.DISCIPLE) -> row = 0;
             default -> row = null;
         }
     }

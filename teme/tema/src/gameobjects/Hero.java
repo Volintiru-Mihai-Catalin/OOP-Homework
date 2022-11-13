@@ -1,16 +1,15 @@
 package gameobjects;
 
 import fileio.CardInput;
-import gameobjects.Card;
 import utils.Constants;
 
-public class Hero extends Card {
+public final class Hero extends Card {
     private final String power;
     private final CardInput card;
 
-    public Hero(CardInput card) {
+    public Hero(final CardInput card) {
         this.card = card;
-        card.setHealth(30);
+        card.setHealth(Constants.HEROHP);
         switch (card.getName()) {
             case (Constants.LORDROYCE) -> power = "Sub-Zero";
             case (Constants.EMPRESSTHORINA) -> power = "Low Blow";
