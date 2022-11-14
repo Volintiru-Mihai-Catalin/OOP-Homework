@@ -6,6 +6,9 @@ public final class Constants {
     public static final String GETPLAYERDECK = "getPlayerDeck";
     public static final String GETPLAYERHERO = "getPlayerHero";
     public static final String GETPLAYERTURN = "getPlayerTurn";
+    public static final String ENDPLAYERTURN = "endPlayerTurn";
+    public static final String GETCARDSINHAND = "getCardsInHand";
+    public static final String PLACECARD = "placeCard";
     public static final String SENTINEL = "Sentinel";
     public static final String BERSERKER = "Berserker";
     public static final String GOLIATH = "Goliath";
@@ -34,4 +37,8 @@ public final class Constants {
     public static final String EARTHBORN = "Earth Born";
     public static final String BLOODTHIRST = "Blood Thirst";
     public static final Integer HEROHP = 30;
+    public static final Integer FIRSTROW = 1;
+    public static final Integer SECONDROW = 2;
+    public static final Integer HEROROW = 0;
+    public static final Integer ENVROW = -1;
 }

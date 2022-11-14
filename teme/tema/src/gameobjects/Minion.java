@@ -22,9 +22,9 @@ public final class Minion extends Card {
         }
         switch (card.getName()) {
             case (Constants.GOLIATH), (Constants.WARDEN), (Constants.THERIPPER),
-                 (Constants.MIRAJ) -> row = 1;
+                 (Constants.MIRAJ) -> row = 2;
             case (Constants.SENTINEL), (Constants.BERSERKER), (Constants.THECURSEDONE),
-                 (Constants.DISCIPLE) -> row = 0;
+                 (Constants.DISCIPLE) -> row = 1;
             default -> row = null;
         }
     }

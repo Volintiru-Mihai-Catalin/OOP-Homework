@@ -11,6 +11,7 @@ import fileio.GameInput;
 import fileio.ActionsInput;
 import utils.Constants;
 import utils.Functions;
+import gameobjects.Table;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,8 @@ public final class GameWorkFlow {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private final Input inputData;
     private final ArrayList<GameInput> gameInput;
+
+    private Table table;
     private ArrayList<Card> deckPlayerOne;
     private ArrayList<Card> deckPlayerTwo;
     private final ArrayList<Card> handPlayerOne = new ArrayList<Card>();
@@ -27,6 +30,11 @@ public final class GameWorkFlow {
 
     private ArrayList<Card> heroPlayerOne = new ArrayList<Card>();
     private ArrayList<Card> heroPlayerTwo = new ArrayList<Card>();
+
+    private static int playerOneMana;
+    private static int playerTwoMana;
+
+    private static int count = 0;
     private static int turn = 0;
     public GameWorkFlow(final Input inputData) {
         this.inputData = inputData;
@@ -65,29 +73,59 @@ public final class GameWorkFlow {
 
         addCardToHandFromDeck(1);
         addCardToHandFromDeck(2);
+
+        playerOneMana = 1;
+        playerTwoMana = 1;
+
+        table = new Table();
     }
 
     private void performAction(final ActionsInput action, final ArrayNode output) {
-        ObjectNode node = MAPPER.createObjectNode();
-        node.put("command", action.getCommand());
-
         switch (action.getCommand()) {
             case (Constants.GETPLAYERDECK) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                node.put("command", action.getCommand());
                 node.put("playerIdx", action.getPlayerIdx());
                 node.set("output",
                         Functions.createArrayNodeFromCards(getPlayerDeck(action.getPlayerIdx())));
+                output.add(node);
             }
             case (Constants.GETPLAYERHERO) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                node.put("command", action.getCommand());
                 node.put("playerIdx", action.getPlayerIdx());
                 node.set("output",
                     Functions.createNodeFromHeroCard(getPlayerHero(action.getPlayerIdx()).get(0)));
+                output.add(node);
             }
-            case (Constants.GETPLAYERTURN) -> node.put("output", turn);
+            case (Constants.GETPLAYERTURN) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                node.put("command", action.getCommand());
+                node.put("output", turn);
+                output.add(node);
+            }
+            case (Constants.ENDPLAYERTURN) -> {
+                updatePlayerTurn();
+                updateRound();
+            }
+            case (Constants.GETCARDSINHAND) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                node.put("command", action.getCommand());
+                node.put("playerIdx", action.getPlayerIdx());
+                node.set("output",
+                        Functions.createArrayNodeFromCards(getCardsInHand(action.getPlayerIdx())));
+                output.add(node);
+            }
+            case (Constants.PLACECARD) -> {
+                Card card = takeCardFromHand(getPlayerDeck(action.getPlayerIdx()),
+                                                                            action.getHandIdx());
+                if (card != null) {
+                    table.playCard(card, action.getPlayerIdx());
+                }
+            }
             default -> {
             }
         }
-
-        output.add(node);
     }
 
     private ArrayList<Card> getPlayerDeck(final int playerIdx) {
@@ -102,6 +140,22 @@ public final class GameWorkFlow {
             return heroPlayerTwo;
         }
         return heroPlayerOne;
+    }
+
+    private ArrayList<Card> getCardsInHand(final int playerIdx) {
+        if (playerIdx == 2) {
+            return handPlayerTwo;
+        }
+        return handPlayerOne;
+    }
+
+    private Card takeCardFromHand(final ArrayList<Card> hand, int cardIdx) {
+        if (hand.size() <= cardIdx) {
+            return null;
+        }
+        Card card = hand.get(cardIdx);
+        hand.remove(card);
+        return card;
     }
 
     private void addCardToHandFromDeck(final int playerIdx) {
@@ -123,10 +177,25 @@ public final class GameWorkFlow {
     }
 
     public void updatePlayerTurn() {
+        count++;
         if (turn == 1) {
             turn = 2;
         } else {
             turn = 1;
+        }
+    }
+
+    public void updateRound() {
+        if (count % 2 == 0) {
+            if (playerTwoMana < 10) {
+                playerTwoMana++;
+            }
+
+            if (playerOneMana < 10) {
+                playerOneMana++;
+            }
+            addCardToHandFromDeck(1);
+            addCardToHandFromDeck(2);
         }
     }
 

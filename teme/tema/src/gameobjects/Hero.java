@@ -25,7 +25,7 @@ public final class Hero extends Card {
 
     @Override
     public Integer getRow() {
-        return -1;
+        return 0;
     }
 
     @Override

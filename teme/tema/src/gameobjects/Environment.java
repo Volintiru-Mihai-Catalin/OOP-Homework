@@ -21,7 +21,7 @@ public final class Environment extends Card {
 
     @Override
     public Integer getRow() {
-        return null;
+        return -1;
     }
 
     @Override

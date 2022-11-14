@@ -18,10 +18,15 @@ Starting audit...
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Minion.java:25:43: Inner assignments should be avoided. [InnerAssignment]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Minion.java:27:46: Inner assignments should be avoided. [InnerAssignment]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Minion.java:28:28: Inner assignments should be avoided. [InnerAssignment]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:36:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:125:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Table.java:31:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:44:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:153:63: Parameter cardIdx should be final. [FinalParameters]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:180:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:189:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:191:33: '10' is a magic number. [MagicNumber]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:195:33: '10' is a magic number. [MagicNumber]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\utils\Functions.java:18:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\utils\Functions.java:32:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\utils\Functions.java:49:5: Missing a Javadoc comment. [MissingJavadocMethod]
 Audit done.
-Checkstyle ends with 24 errors.
+Checkstyle ends with 29 errors.
