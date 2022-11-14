@@ -70,6 +70,9 @@ public final class GameWorkFlow {
 
         Collections.shuffle(deckPlayerOne, new Random(game.getStartGame().getShuffleSeed()));
         Collections.shuffle(deckPlayerTwo, new Random(game.getStartGame().getShuffleSeed()));
+        System.out.println(deckPlayerOne);
+        System.out.println(deckPlayerTwo);
+        System.out.println("--------------------------");
 
         addCardToHandFromDeck(1);
         addCardToHandFromDeck(2);
@@ -117,7 +120,7 @@ public final class GameWorkFlow {
                 output.add(node);
             }
             case (Constants.PLACECARD) -> {
-                Card card = takeCardFromHand(getPlayerDeck(action.getPlayerIdx()),
+                Card card = takeCardFromHand(getCardsInHand(action.getPlayerIdx()),
                                                                             action.getHandIdx());
                 if (card != null) {
                     table.playCard(card, action.getPlayerIdx());
