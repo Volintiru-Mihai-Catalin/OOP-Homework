@@ -36,6 +36,7 @@ public final class GameWorkFlow {
 
     private static int count = 0;
     private static int turn = 0;
+    private static int mana = 0;
     public GameWorkFlow(final Input inputData) {
         this.inputData = inputData;
         gameInput = inputData.getGames();
@@ -70,15 +71,13 @@ public final class GameWorkFlow {
 
         Collections.shuffle(deckPlayerOne, new Random(game.getStartGame().getShuffleSeed()));
         Collections.shuffle(deckPlayerTwo, new Random(game.getStartGame().getShuffleSeed()));
-        System.out.println(deckPlayerOne);
-        System.out.println(deckPlayerTwo);
-        System.out.println("--------------------------");
 
         addCardToHandFromDeck(1);
         addCardToHandFromDeck(2);
 
         playerOneMana = 1;
         playerTwoMana = 1;
+        mana = 1;
 
         table = new Table();
     }
@@ -120,11 +119,29 @@ public final class GameWorkFlow {
                 output.add(node);
             }
             case (Constants.PLACECARD) -> {
-                Card card = takeCardFromHand(getCardsInHand(action.getPlayerIdx()),
-                                                                            action.getHandIdx());
+                Card card = takeCardFromHand(getCardsInHand(turn), action.getHandIdx());
                 if (card != null) {
-                    table.playCard(card, action.getPlayerIdx());
+                    table.playCard(card, turn);
                 }
+            }
+            case (Constants.GETPLAYERMANA) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                node.put("command", action.getCommand());
+                node.put("playerIdx", action.getPlayerIdx());
+                node.put("output", getPlayerMana(action.getPlayerIdx()));
+                output.add(node);
+            }
+            case (Constants.GETCARDSONTABLE) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                ArrayNode rows = MAPPER.createArrayNode();
+                node.put("command", action.getCommand());
+                rows.add(Functions.createArrayNodeFromCards(table.getRowOnePlayerTwo()));
+                rows.add(Functions.createArrayNodeFromCards(table.getRowTwoPlayerTwo()));
+                rows.add(Functions.createArrayNodeFromCards(table.getRowTwoPlayerOne()));
+                rows.add(Functions.createArrayNodeFromCards(table.getRowOnePlayerOne()));
+                node.set("output", rows);
+
+                output.add(node);
             }
             default -> {
             }
@@ -158,6 +175,12 @@ public final class GameWorkFlow {
         }
         Card card = hand.get(cardIdx);
         hand.remove(card);
+
+        if (turn == 1) {
+            playerOneMana -= card.getInstance().getMana();
+        } else {
+            playerTwoMana -= card.getInstance().getMana();
+        }
         return card;
     }
 
@@ -190,16 +213,21 @@ public final class GameWorkFlow {
 
     public void updateRound() {
         if (count % 2 == 0) {
-            if (playerTwoMana < 10) {
-                playerTwoMana++;
+            if (mana < 10) {
+                mana++;
             }
-
-            if (playerOneMana < 10) {
-                playerOneMana++;
-            }
+            playerOneMana += mana;
+            playerTwoMana += mana;
             addCardToHandFromDeck(1);
             addCardToHandFromDeck(2);
         }
+    }
+
+    private int getPlayerMana(final int playerIdx) {
+        if (playerIdx == 1) {
+            return playerOneMana;
+        }
+        return playerTwoMana;
     }
 
     public ArrayList<Card> getHandPlayerOne() {

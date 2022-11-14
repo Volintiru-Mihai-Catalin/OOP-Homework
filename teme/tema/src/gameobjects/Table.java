@@ -1,5 +1,7 @@
 package gameobjects;
 
+import utils.Constants;
+
 import java.util.ArrayList;
 
 public final class Table {
@@ -29,17 +31,19 @@ public final class Table {
     }
 
     public void playCard(final Card card, final int playerIdx) {
-        if (playerIdx == 1) {
-            if (card.getRow() == 1) {
-                rowOnePlayerOne.add(card);
+        if (card.getAttribute().compareTo(Constants.MINION) == 0) {
+            if (playerIdx == 1) {
+                if (card.getRow() == 1) {
+                    rowOnePlayerOne.add(card);
+                } else {
+                    rowTwoPlayerOne.add(card);
+                }
             } else {
-                rowTwoPlayerOne.add(card);
-            }
-        } else {
-            if (card.getRow() == 1) {
-                rowOnePlayerTwo.add(card);
-            } else {
-                rowTwoPlayerTwo.add(card);
+                if (card.getRow() == 1) {
+                    rowOnePlayerTwo.add(card);
+                } else {
+                    rowTwoPlayerTwo.add(card);
+                }
             }
         }
     }

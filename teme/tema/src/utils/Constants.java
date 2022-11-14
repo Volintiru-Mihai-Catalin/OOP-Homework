@@ -8,6 +8,9 @@ public final class Constants {
     public static final String GETPLAYERTURN = "getPlayerTurn";
     public static final String ENDPLAYERTURN = "endPlayerTurn";
     public static final String GETCARDSINHAND = "getCardsInHand";
+    public static final String GETPLAYERMANA = "getPlayerMana";
+
+    public static final String GETCARDSONTABLE = "getCardsOnTable";
     public static final String PLACECARD = "placeCard";
     public static final String SENTINEL = "Sentinel";
     public static final String BERSERKER = "Berserker";
