@@ -119,9 +119,30 @@ public final class GameWorkFlow {
                 output.add(node);
             }
             case (Constants.PLACECARD) -> {
+                ObjectNode node = MAPPER.createObjectNode();
                 Card card = takeCardFromHand(getCardsInHand(turn), action.getHandIdx());
                 if (card != null) {
-                    table.playCard(card, turn);
+                    if (card.getAttribute().compareTo(Constants.MINION) == 0) {
+                        boolean isOnTable = table.playCard(card, turn);
+                        if (!isOnTable) {
+                            remakeHandAndDeck(card, action.getHandIdx());
+                            node.put("command", action.getCommand());
+                            node.put("handIdx", action.getHandIdx());
+                            node.put("error", Constants.ERRORROWFULL);
+                            output.add(node);
+                        }
+                    } else {
+                        remakeHandAndDeck(card, action.getHandIdx());
+                        node.put("command", action.getCommand());
+                        node.put("handIdx", action.getHandIdx());
+                        node.put("error", Constants.ERRORENVONTABLE);
+                        output.add(node);
+                    }
+                } else {
+                    node.put("command", action.getCommand());
+                    node.put("handIdx", action.getHandIdx());
+                    node.put("error", Constants.ERRORNOTENOUGHMANA);
+                    output.add(node);
                 }
             }
             case (Constants.GETPLAYERMANA) -> {
@@ -169,18 +190,26 @@ public final class GameWorkFlow {
         return handPlayerOne;
     }
 
-    private Card takeCardFromHand(final ArrayList<Card> hand, int cardIdx) {
+    private Card takeCardFromHand(final ArrayList<Card> hand, final int cardIdx) {
         if (hand.size() <= cardIdx) {
             return null;
         }
         Card card = hand.get(cardIdx);
-        hand.remove(card);
 
         if (turn == 1) {
-            playerOneMana -= card.getInstance().getMana();
+            if (playerOneMana >= card.getInstance().getMana()) {
+                playerOneMana -= card.getInstance().getMana();
+            } else {
+                return null;
+            }
         } else {
-            playerTwoMana -= card.getInstance().getMana();
+            if (playerTwoMana >= card.getInstance().getMana()) {
+                playerTwoMana -= card.getInstance().getMana();
+            } else {
+                return null;
+            }
         }
+        hand.remove(card);
         return card;
     }
 
@@ -213,7 +242,7 @@ public final class GameWorkFlow {
 
     public void updateRound() {
         if (count % 2 == 0) {
-            if (mana < 10) {
+            if (mana < Constants.MAXMANA) {
                 mana++;
             }
             playerOneMana += mana;
@@ -228,6 +257,15 @@ public final class GameWorkFlow {
             return playerOneMana;
         }
         return playerTwoMana;
+    }
+
+    private void remakeHandAndDeck(final Card card, final int handIdx) {
+        getCardsInHand(turn).add(handIdx, card);
+        if (turn == 1) {
+            playerOneMana += card.getInstance().getMana();
+        } else {
+            playerTwoMana += card.getInstance().getMana();
+        }
     }
 
     public ArrayList<Card> getHandPlayerOne() {

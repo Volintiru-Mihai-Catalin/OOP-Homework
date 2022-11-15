@@ -30,21 +30,43 @@ public final class Table {
         return rowTwoPlayerTwo;
     }
 
-    public void playCard(final Card card, final int playerIdx) {
+    public boolean playCard(final Card card, final int playerIdx) {
         if (card.getAttribute().compareTo(Constants.MINION) == 0) {
             if (playerIdx == 1) {
                 if (card.getRow() == 1) {
-                    rowOnePlayerOne.add(card);
+                    if (rowOnePlayerOne.size() < 5) {
+                        rowOnePlayerOne.add(card);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
-                    rowTwoPlayerOne.add(card);
+                    if (rowTwoPlayerOne.size() < 5) {
+                        rowTwoPlayerOne.add(card);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             } else {
                 if (card.getRow() == 1) {
-                    rowOnePlayerTwo.add(card);
+                    if (rowOnePlayerTwo.size() < 5) {
+                        rowOnePlayerTwo.add(card);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
-                    rowTwoPlayerTwo.add(card);
+                    if (rowTwoPlayerTwo.size() < 5) {
+                        rowTwoPlayerTwo.add(card);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
+
+        return false;
     }
 }

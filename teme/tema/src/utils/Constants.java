@@ -39,9 +39,14 @@ public final class Constants {
     public static final String LOWBLOW = "Low Blow";
     public static final String EARTHBORN = "Earth Born";
     public static final String BLOODTHIRST = "Blood Thirst";
+
+    public static final String ERRORENVONTABLE = "Cannot place environment card on table.";
+    public static final String ERRORNOTENOUGHMANA = "Not enough mana to place card on table.";
+    public static final String ERRORROWFULL = "Cannot place card on table since row is full.";
     public static final Integer HEROHP = 30;
     public static final Integer FIRSTROW = 1;
     public static final Integer SECONDROW = 2;
     public static final Integer HEROROW = 0;
     public static final Integer ENVROW = -1;
+    public static final Integer MAXMANA = 10;
 }

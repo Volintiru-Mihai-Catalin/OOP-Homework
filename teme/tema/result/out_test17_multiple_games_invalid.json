@@ -16,6 +16,10 @@
   "playerIdx" : 2,
   "output" : 1
 }, {
+  "command" : "placeCard",
+  "handIdx" : 0,
+  "error" : "Cannot place environment card on table."
+}, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
     "mana" : 1,
@@ -62,6 +66,11 @@
   "playerIdx" : 1,
   "output" : [ {
     "mana" : 2,
+    "description" : "Premium card: The fury of hell is upon us, please kill us.",
+    "colors" : [ "Red", "Yellow" ],
+    "name" : "Firestorm"
+  }, {
+    "mana" : 2,
     "attackDamage" : 5,
     "health" : 1,
     "description" : "Premium card: Fear him. Your last breath is now.",
@@ -83,12 +92,16 @@
   "playerIdx" : 2,
   "output" : 1
 }, {
+  "command" : "placeCard",
+  "handIdx" : 0,
+  "error" : "Cannot place environment card on table."
+}, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 1
+  "output" : 3
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
@@ -99,11 +112,15 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 2
+  "output" : 4
+}, {
+  "command" : "placeCard",
+  "handIdx" : 0,
+  "error" : "Cannot place environment card on table."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 5
+  "output" : 8
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
@@ -137,20 +154,22 @@
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
-  } ], [ {
-    "mana" : 2,
-    "attackDamage" : 7,
-    "health" : 6,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Brown", "Blue" ],
-    "name" : "Warden"
-  } ], [ {
+  } ], [ ], [ {
     "mana" : 2,
     "attackDamage" : 5,
     "health" : 1,
     "description" : "Premium card: Fear him. Your last breath is now.",
     "colors" : [ "Purple", "Yellow" ],
     "name" : "Berserker"
+  } ] ]
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 1,
+  "output" : [ {
+    "mana" : 2,
+    "description" : "Premium card: The fury of hell is upon us, please kill us.",
+    "colors" : [ "Red", "Yellow" ],
+    "name" : "Firestorm"
   }, {
     "mana" : 1,
     "attackDamage" : 0,
@@ -158,11 +177,14 @@
     "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
     "colors" : [ "Yellow", "White" ],
     "name" : "Disciple"
-  } ] ]
-}, {
-  "command" : "getCardsInHand",
-  "playerIdx" : 1,
-  "output" : [ {
+  }, {
+    "mana" : 2,
+    "attackDamage" : 7,
+    "health" : 6,
+    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
+    "colors" : [ "Brown", "Blue" ],
+    "name" : "Warden"
+  }, {
     "mana" : 2,
     "description" : "Standard card: The dragon was unleashed, run for your lives.",
     "colors" : [ "Red", "Yellow" ],

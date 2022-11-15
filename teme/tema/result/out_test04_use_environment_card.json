@@ -1,11 +1,19 @@
 [ {
+  "command" : "placeCard",
+  "handIdx" : 0,
+  "error" : "Cannot place environment card on table."
+}, {
+  "command" : "placeCard",
+  "handIdx" : 0,
+  "error" : "Cannot place environment card on table."
+}, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 17
+  "output" : 18
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 15
+  "output" : 17
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
@@ -42,6 +50,11 @@
   "playerIdx" : 1,
   "output" : [ {
     "mana" : 1,
+    "description" : "Standard card: The days are cold and so are we. We hope we can close our eyes again.",
+    "colors" : [ "White", "Blue" ],
+    "name" : "Winterfell"
+  }, {
+    "mana" : 1,
     "attackDamage" : 2,
     "health" : 1,
     "description" : "Premium card: Fear him. Your last breath is now.",
@@ -64,6 +77,11 @@
   "command" : "getCardsInHand",
   "playerIdx" : 2,
   "output" : [ {
+    "mana" : 2,
+    "description" : "Standard card: The days are cold and so are we. We hope we can close our eyes again.",
+    "colors" : [ "White", "Grey", "Black" ],
+    "name" : "Winterfell"
+  }, {
     "mana" : 2,
     "attackDamage" : 1,
     "health" : 3,

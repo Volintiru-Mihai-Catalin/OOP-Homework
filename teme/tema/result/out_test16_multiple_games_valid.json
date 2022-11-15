@@ -99,9 +99,13 @@
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
+  "command" : "placeCard",
+  "handIdx" : 0,
+  "error" : "Cannot place environment card on table."
+}, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 2
+  "output" : 3
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -123,7 +127,14 @@
   "output" : 8
 }, {
   "command" : "getCardsOnTable",
-  "output" : [ [ ], [ ], [ {
+  "output" : [ [ {
+    "mana" : 2,
+    "attackDamage" : 0,
+    "health" : 1,
+    "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",
+    "colors" : [ "Pink", "Purple" ],
+    "name" : "The Cursed One"
+  } ], [ ], [ {
     "mana" : 2,
     "attackDamage" : 5,
     "health" : 8,
@@ -167,12 +178,15 @@
   "command" : "getCardsInHand",
   "playerIdx" : 2,
   "output" : [ {
-    "mana" : 2,
-    "attackDamage" : 0,
-    "health" : 1,
-    "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",
-    "colors" : [ "Pink", "Purple" ],
-    "name" : "The Cursed One"
+    "mana" : 1,
+    "description" : "Premium card: The fury of hell is upon us, please kill us.",
+    "colors" : [ "Blue", "Green", "White" ],
+    "name" : "Firestorm"
+  }, {
+    "mana" : 1,
+    "description" : "Premium card: The fury of hell is upon us, please kill us.",
+    "colors" : [ "Blue", "Green", "White" ],
+    "name" : "Firestorm"
   }, {
     "mana" : 2,
     "attackDamage" : 5,
