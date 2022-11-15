@@ -49,4 +49,5 @@ public final class Constants {
     public static final Integer HEROROW = 0;
     public static final Integer ENVROW = -1;
     public static final Integer MAXMANA = 10;
+    public static final Integer MAXCARDS = 5;
 }

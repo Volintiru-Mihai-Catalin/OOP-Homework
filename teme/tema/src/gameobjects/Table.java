@@ -34,14 +34,14 @@ public final class Table {
         if (card.getAttribute().compareTo(Constants.MINION) == 0) {
             if (playerIdx == 1) {
                 if (card.getRow() == 1) {
-                    if (rowOnePlayerOne.size() < 5) {
+                    if (rowOnePlayerOne.size() < Constants.MAXCARDS) {
                         rowOnePlayerOne.add(card);
                         return true;
                     } else {
                         return false;
                     }
                 } else {
-                    if (rowTwoPlayerOne.size() < 5) {
+                    if (rowTwoPlayerOne.size() < Constants.MAXCARDS) {
                         rowTwoPlayerOne.add(card);
                         return true;
                     } else {
@@ -50,14 +50,14 @@ public final class Table {
                 }
             } else {
                 if (card.getRow() == 1) {
-                    if (rowOnePlayerTwo.size() < 5) {
+                    if (rowOnePlayerTwo.size() < Constants.MAXCARDS) {
                         rowOnePlayerTwo.add(card);
                         return true;
                     } else {
                         return false;
                     }
                 } else {
-                    if (rowTwoPlayerTwo.size() < 5) {
+                    if (rowTwoPlayerTwo.size() < Constants.MAXCARDS) {
                         rowTwoPlayerTwo.add(card);
                         return true;
                     } else {

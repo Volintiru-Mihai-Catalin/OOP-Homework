@@ -6,29 +6,38 @@ import utils.Constants;
 
 public final class Minion extends Card {
 
-    private final String power;
+    private String power = null;
     private final CardInput card;
-    private final Integer row;
+    private Integer row = null;
 
     public Minion(final CardInput card) {
         this.card = card;
         switch (card.getName()) {
-            case (Constants.GOLIATH), (Constants.WARDEN) -> power = "Tank";
-            case (Constants.THERIPPER) -> power = "Weak Knees";
-            case (Constants.MIRAJ) -> power = "Skyjack";
-            case (Constants.THECURSEDONE) -> power = "Shapeshift";
-            case (Constants.DISCIPLE) -> power = "God's Plan";
-            default -> power = null;
+            case (Constants.GOLIATH), (Constants.WARDEN) -> setPower("Tank");
+            case (Constants.THERIPPER) -> setPower("Weak Knees");
+            case (Constants.MIRAJ) -> setPower("Skyjack");
+            case (Constants.THECURSEDONE) -> setPower("Shapeshift");
+            case (Constants.DISCIPLE) -> setPower("God's Plan");
+            default -> {
+            }
         }
         switch (card.getName()) {
             case (Constants.GOLIATH), (Constants.WARDEN), (Constants.THERIPPER),
-                 (Constants.MIRAJ) -> row = 2;
+                 (Constants.MIRAJ) -> setRow(2);
             case (Constants.SENTINEL), (Constants.BERSERKER), (Constants.THECURSEDONE),
-                 (Constants.DISCIPLE) -> row = 1;
-            default -> row = null;
+                 (Constants.DISCIPLE) -> setRow(1);
+            default -> {
+            }
         }
     }
 
+    private void setPower(final String power) {
+        this.power = power;
+    }
+
+    private void setRow(final Integer row) {
+        this.row = row;
+    }
     public Integer getRow() {
         return row;
     }
