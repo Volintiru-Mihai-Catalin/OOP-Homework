@@ -42,4 +42,17 @@ public final class Hero extends Card {
     public String getAttribute() {
         return Constants.HERO;
     }
+
+    @Override
+    public void freeze(final boolean freeze) {
+    }
+
+    @Override
+    public boolean isFrozen() {
+        return false;
+    }
+
+    public void usePower() {
+
+    }
 }

@@ -6,12 +6,14 @@ import utils.Constants;
 
 public final class Minion extends Card {
 
+    private boolean frozen;
     private String power = null;
     private final CardInput card;
     private Integer row = null;
 
     public Minion(final CardInput card) {
         this.card = card;
+        frozen = false;
         switch (card.getName()) {
             case (Constants.GOLIATH), (Constants.WARDEN) -> setPower("Tank");
             case (Constants.THERIPPER) -> setPower("Weak Knees");
@@ -31,6 +33,10 @@ public final class Minion extends Card {
         }
     }
 
+    public void usePower() {
+
+    }
+
     private void setPower(final String power) {
         this.power = power;
     }
@@ -48,6 +54,15 @@ public final class Minion extends Card {
 
     public String getAttribute() {
         return Constants.MINION;
+    }
+
+    @Override
+    public void freeze(final boolean freeze) {
+        this.frozen = freeze;
+    }
+
+    public boolean isFrozen() {
+        return this.frozen;
     }
     @Override
     public CardInput getInstance() {

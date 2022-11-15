@@ -27,6 +27,8 @@ public final class GameWorkFlow {
 
     private static int count = 0;
     private static int turn = 0;
+
+    private static int enemy = 0;
     private static int mana = 0;
     public GameWorkFlow(final Input inputData) {
         this.inputData = inputData;
@@ -45,6 +47,11 @@ public final class GameWorkFlow {
     private void startGame(final GameInput game) {
 
         turn = game.getStartGame().getStartingPlayer();
+        if (turn == 1) {
+            enemy = 2;
+        } else {
+            enemy = 1;
+        }
         int playerOneIdx = game.getStartGame().getPlayerOneDeckIdx();
         int playerTwoIdx = game.getStartGame().getPlayerTwoDeckIdx();
 
@@ -157,6 +164,48 @@ public final class GameWorkFlow {
 
                 output.add(node);
             }
+            case (Constants.GETENVCARDSINHAND) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                node.put("command", action.getCommand());
+                node.put("playerIdx", action.getPlayerIdx());
+                node.set("output",
+                    Functions.createArrayNodeFromCards(getEnvCardsInHand(action.getPlayerIdx())));
+                output.add(node);
+            }
+            case (Constants.GETCARDATPOSITION) -> {
+                Card card = table.getCardAtPosition(action.getX(), action.getY());
+                if (card != null) {
+                    ObjectNode node = MAPPER.createObjectNode();
+                    node.put("command", action.getCommand());
+                    node.put("x", action.getX());
+                    node.put("y", action.getY());
+                    node.set("output",
+                            Functions.createNodeFromMinionOrEnvCard(card));
+                    output.add(node);
+                }
+            }
+            case (Constants.USEENVCARD) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                Card card = takeCardFromHand(action.getHandIdx());
+                if (card != null) {
+                    if (card.getAttribute().compareTo(Constants.ENVIRONMENT) == 0) {
+                        table.useEnvCardOnRow(card, action.getAffectedRow());
+                    } else {
+                        remakeHandAndDeck(card, action.getHandIdx());
+                        node.put("command", action.getCommand());
+                        node.put("handIdx", action.getHandIdx());
+                        node.put("affectedRow", action.getAffectedRow());
+                        node.put("error", Constants.ERRORNOTENVCARD);
+                        output.add(node);
+                    }
+                } else {
+                    node.put("command", action.getCommand());
+                    node.put("handIdx", action.getHandIdx());
+                    node.put("affectedRow", action.getAffectedRow());
+                    node.put("error", Constants.ERRORNOTENOUGHMANA);
+                    output.add(node);
+                }
+            }
             default -> {
             }
         }
@@ -183,6 +232,13 @@ public final class GameWorkFlow {
         return playerTwo.getHand();
     }
 
+    private ArrayList<Card> getEnvCardsInHand(final int playerIdx) {
+        if (playerIdx == 1) {
+            return playerOne.getEnvCardsInHand();
+        }
+        return playerTwo.getEnvCardsInHand();
+    }
+
     private Card takeCardFromHand(final int cardIdx) {
         if (turn == 1) {
             return playerOne.takeCardFromHand(cardIdx);
@@ -194,8 +250,10 @@ public final class GameWorkFlow {
         count++;
         if (turn == 1) {
             turn = 2;
+            enemy = 1;
         } else {
             turn = 1;
+            enemy = 2;
         }
     }
 
@@ -209,6 +267,7 @@ public final class GameWorkFlow {
             playerTwo.addMana(mana);
             playerOne.addCardToHandFromDeck();
             playerTwo.addCardToHandFromDeck();
+            table.unfreezeMinions();
         }
     }
 

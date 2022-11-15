@@ -69,4 +69,87 @@ public final class Table {
 
         return false;
     }
+
+    public Card getCardAtPosition(final int x, final int y) {
+
+        switch (x) {
+            case (Constants.ZERO) -> {
+                if (rowOnePlayerTwo.size() > y) {
+                    return rowOnePlayerTwo.get(y);
+                }
+            }
+            case (Constants.ONE) -> {
+                if (rowTwoPlayerTwo.size() > y) {
+                    return rowTwoPlayerTwo.get(y);
+                }
+            }
+            case (Constants.TWO) -> {
+                if (rowTwoPlayerOne.size() > y) {
+                    return rowTwoPlayerOne.get(y);
+                }
+            }
+
+            case (Constants.THREE) -> {
+                if (rowOnePlayerOne.size() > y) {
+                    return rowOnePlayerOne.get(y);
+                }
+            }
+            default -> {
+            }
+        }
+
+        return null;
+    }
+
+    public void useEnvCardOnRow(final Card card, final int rowIdx) {
+        switch (rowIdx) {
+            case (Constants.ZERO) -> ((Environment) card).usePower(rowOnePlayerTwo, this);
+            case (Constants.ONE) -> ((Environment) card).usePower(rowTwoPlayerTwo, this);
+            case (Constants.TWO) -> ((Environment) card).usePower(rowTwoPlayerOne, this);
+            case (Constants.THREE) -> ((Environment) card).usePower(rowOnePlayerOne, this);
+            default -> {
+            }
+        }
+    }
+
+    public void stealCardFromRow(final ArrayList<Card> row, final Card card) {
+        if (card != null) {
+            ArrayList<Card> mirrorRow = null;
+            if (row.equals(rowOnePlayerOne)) {
+                mirrorRow = rowOnePlayerTwo;
+            } else if (row.equals(rowOnePlayerTwo)) {
+                mirrorRow = rowOnePlayerOne;
+            } else if (row.equals(rowTwoPlayerOne)) {
+                mirrorRow = rowTwoPlayerTwo;
+            } else if (row.equals(rowTwoPlayerTwo)) {
+                mirrorRow = rowTwoPlayerOne;
+            }
+
+            if (mirrorRow != null) {
+                if (mirrorRow.size() < Constants.MAXCARDS) {
+                    row.remove(card);
+                    mirrorRow.add(card);
+                }
+            }
+        }
+    }
+
+    public void removeDeadMinions(final ArrayList<Card> row) {
+        row.removeIf(card -> card.getInstance().getHealth() < 1);
+    }
+
+    public void unfreezeMinions() {
+        for (Card card : rowOnePlayerOne) {
+            card.freeze(Constants.ISNOTFROZEN);
+        }
+        for (Card card : rowOnePlayerTwo) {
+            card.freeze(Constants.ISNOTFROZEN);
+        }
+        for (Card card : rowTwoPlayerOne) {
+            card.freeze(Constants.ISNOTFROZEN);
+        }
+        for (Card card : rowTwoPlayerTwo) {
+            card.freeze(Constants.ISNOTFROZEN);
+        }
+    }
 }

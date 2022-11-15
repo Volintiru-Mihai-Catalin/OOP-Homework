@@ -3,8 +3,9 @@ package gameobjects;
 import fileio.CardInput;
 import utils.Constants;
 
-public final class Environment extends Card {
+import java.util.ArrayList;
 
+public final class Environment extends Card {
     private final CardInput card;
     public Environment(final CardInput card) {
         this.card = card;
@@ -32,5 +33,43 @@ public final class Environment extends Card {
     @Override
     public String getAttribute() {
         return Constants.ENVIRONMENT;
+    }
+
+    @Override
+    public void freeze(final boolean freeze) {
+    }
+
+    @Override
+    public boolean isFrozen() {
+        return false;
+    }
+
+    public void usePower(final ArrayList<Card> row, final Table table) {
+        switch (card.getName()) {
+            case (Constants.WINTERFELL) -> {
+                for (Card cardInRow : row) {
+                    cardInRow.freeze(Constants.ISFROZEN);
+                }
+            }
+            case (Constants.FIRESTORM) -> {
+                for (Card cardInRow : row) {
+                    cardInRow.getInstance().setHealth(cardInRow.getInstance().getHealth() - 1);
+                }
+                table.removeDeadMinions(row);
+            }
+            case (Constants.HEARTHOUND) -> {
+                int hp = 0;
+                Card cardToSteal = null;
+                for (Card cardInRow : row) {
+                    if (cardInRow.getInstance().getHealth() > hp) {
+                        hp = cardInRow.getInstance().getHealth();
+                        cardToSteal = cardInRow;
+                    }
+                }
+                table.stealCardFromRow(row, cardToSteal);
+            }
+            default -> {
+            }
+        }
     }
 }

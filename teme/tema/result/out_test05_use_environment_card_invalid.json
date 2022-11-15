@@ -1,28 +1,96 @@
 [ {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 1,
+  "output" : [ {
+    "mana" : 3,
+    "description" : "Standard card: The dragon was unleashed, run for your lives.",
+    "colors" : [ "Red", "Yellow" ],
+    "name" : "Firestorm"
+  } ]
+}, {
+  "command" : "getCardAtPosition",
+  "x" : 1,
+  "y" : 0,
+  "output" : {
+    "mana" : 3,
+    "attackDamage" : 2,
+    "health" : 7,
+    "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
+  }
+}, {
+  "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
+  "output" : {
+    "mana" : 3,
+    "attackDamage" : 1,
+    "health" : 7,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Brown", "Black", "Grey" ],
+    "name" : "Goliath"
+  }
+}, {
+  "command" : "getEnvironmentCardsInHand",
+  "playerIdx" : 1,
+  "output" : [ ]
+}, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
-  "command" : "placeCard",
-  "handIdx" : 0,
-  "error" : "Cannot place environment card on table."
+  "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
+  "output" : {
+    "mana" : 3,
+    "attackDamage" : 1,
+    "health" : 7,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Brown", "Black", "Grey" ],
+    "name" : "Goliath"
+  }
 }, {
-  "command" : "placeCard",
+  "command" : "getCardAtPosition",
+  "x" : 1,
+  "y" : 0,
+  "output" : {
+    "mana" : 3,
+    "attackDamage" : 2,
+    "health" : 7,
+    "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
+  }
+}, {
+  "command" : "useEnvironmentCard",
   "handIdx" : 0,
-  "error" : "Cannot place environment card on table."
+  "affectedRow" : 2,
+  "error" : "Not enough mana to place card on table."
+}, {
+  "command" : "useEnvironmentCard",
+  "handIdx" : 0,
+  "affectedRow" : 3,
+  "error" : "Not enough mana to place card on table."
+}, {
+  "command" : "useEnvironmentCard",
+  "handIdx" : 0,
+  "affectedRow" : 1,
+  "error" : "Not enough mana to place card on table."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 33
+  "output" : 17
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 25
+  "output" : 23
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ ], [ {
     "mana" : 3,
     "attackDamage" : 2,
-    "health" : 8,
+    "health" : 7,
     "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"
@@ -75,20 +143,6 @@
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
-  } ], [ ] ]
-}, {
-  "command" : "getCardsInHand",
-  "playerIdx" : 1,
-  "output" : [ {
-    "mana" : 3,
-    "description" : "Standard card: The dragon was unleashed, run for your lives.",
-    "colors" : [ "Red", "Yellow" ],
-    "name" : "Firestorm"
-  }, {
-    "mana" : 4,
-    "description" : "Premium card: The fury of hell is upon us, please kill us.",
-    "colors" : [ "Red", "Yellow" ],
-    "name" : "Firestorm"
   }, {
     "mana" : 4,
     "attackDamage" : 5,
@@ -103,7 +157,11 @@
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj"
-  }, {
+  } ], [ ] ]
+}, {
+  "command" : "getCardsInHand",
+  "playerIdx" : 1,
+  "output" : [ {
     "mana" : 1,
     "description" : "Premium card: Your mind is ours. Your body is ours. Stop begging.",
     "colors" : [ "Green", "Black" ],
@@ -120,11 +178,6 @@
   "command" : "getCardsInHand",
   "playerIdx" : 2,
   "output" : [ {
-    "mana" : 2,
-    "description" : "Premium card: Your mind is ours. Your body is ours. Stop begging.",
-    "colors" : [ "Red", "White", "Grey" ],
-    "name" : "Heart Hound"
-  }, {
     "mana" : 1,
     "description" : "Standard card: Corruption is easy, you always wanted it, now I help you embrace it.",
     "colors" : [ "Green", "Black" ],

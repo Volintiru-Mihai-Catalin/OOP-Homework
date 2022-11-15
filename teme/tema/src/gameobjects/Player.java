@@ -1,5 +1,7 @@
 package gameobjects;
 
+import utils.Constants;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -50,6 +52,16 @@ public final class Player {
 
     public ArrayList<Card> getDeck() {
         return deck;
+    }
+
+    public ArrayList<Card> getEnvCardsInHand() {
+        ArrayList<Card> env = new ArrayList<>();
+        for (Card card : hand) {
+            if (card.getAttribute().compareTo(Constants.ENVIRONMENT) == 0) {
+                env.add(card);
+            }
+        }
+        return env;
     }
 
     public ArrayList<Card> getHand() {
