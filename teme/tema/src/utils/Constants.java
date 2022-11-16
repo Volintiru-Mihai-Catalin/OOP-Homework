@@ -16,6 +16,7 @@ public final class Constants {
     public static final String GETENVCARDSINHAND = "getEnvironmentCardsInHand";
     public static final String GETCARDATPOSITION = "getCardAtPosition";
     public static final String USEENVCARD = "useEnvironmentCard";
+    public static final String GETFROZENCARDS = "getFrozenCardsOnTable";
 
     // Card types
     public static final String MINION = "Minion";
@@ -63,9 +64,12 @@ public final class Constants {
     // Errors
     public static final String ERRORENVONTABLE = "Cannot place environment card on table.";
     public static final String ERRORNOTENOUGHMANA = "Not enough mana to place card on table.";
+    public static final String ERRORNOTENOUGHMANAENV = "Not enough mana to use environment card.";
     public static final String ERRORROWFULL = "Cannot place card on table since row is full.";
     public static final String ERRORNOTENVCARD = "Chosen card is not of type environment.";
-    public static final String NOTENEMYROW = "Chosen row does not belong to the enemy.";
+    public static final String ERRORNOTENEMYROW = "Chosen row does not belong to the enemy.";
+    public static final String ERROECANNOTSTEAL =
+                                    "Cannot steal enemy card since the player's row is full.";
     public static final int STATUSOK = 0;
     public static final int ERRORSTATUSONE = 1;
 

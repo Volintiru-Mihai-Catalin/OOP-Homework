@@ -7,6 +7,9 @@
   "playerIdx" : 1,
   "output" : [ ]
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
@@ -38,6 +41,9 @@
   "playerIdx" : 1,
   "output" : [ ]
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
@@ -49,6 +55,9 @@
     "colors" : [ "Blue", "Green", "White" ],
     "name" : "Firestorm"
   } ]
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
@@ -152,6 +161,9 @@
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
@@ -196,6 +208,9 @@
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 0,
@@ -208,6 +223,9 @@
     "name" : "The Cursed One"
   }
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
@@ -219,6 +237,9 @@
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
   }
+}, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,

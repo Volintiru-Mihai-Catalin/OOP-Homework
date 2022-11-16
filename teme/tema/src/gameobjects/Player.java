@@ -27,11 +27,7 @@ public final class Player {
         }
         Card card = hand.get(cardIdx);
 
-        if (mana >= card.getInstance().getMana()) {
-            mana -= card.getInstance().getMana();
-        } else {
-            return null;
-        }
+        mana -= card.getInstance().getMana();
         hand.remove(card);
         return card;
     }
@@ -78,5 +74,12 @@ public final class Player {
 
     public void addMana(final int manaAmount) {
         mana += manaAmount;
+    }
+
+    public Card getCard(final int handIdx) {
+        if (hand.size() <= handIdx) {
+            return null;
+        }
+        return hand.get(handIdx);
     }
 }

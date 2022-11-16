@@ -120,29 +120,31 @@ public final class GameWorkFlow {
             }
             case (Constants.PLACECARD) -> {
                 ObjectNode node = MAPPER.createObjectNode();
-                Card card = takeCardFromHand(action.getHandIdx());
-                if (card != null) {
-                    if (card.getAttribute().compareTo(Constants.MINION) == 0) {
-                        boolean isOnTable = table.playCard(card, turn);
-                        if (!isOnTable) {
-                            remakeHandAndDeck(card, action.getHandIdx());
+                Card cardToBePlayed = getCard(action.getHandIdx());
+                if (cardToBePlayed != null) {
+                    if (cardToBePlayed.getAttribute().compareTo(Constants.MINION) == 0) {
+                        if (cardToBePlayed.getInstance().getMana() <= getPlayerMana(turn)) {
+                            Card card = takeCardFromHand(action.getHandIdx());
+                            boolean isOnTable = table.playCard(card, turn);
+                            if (!isOnTable) {
+                                remakeHandAndDeck(card, action.getHandIdx());
+                                node.put("command", action.getCommand());
+                                node.put("handIdx", action.getHandIdx());
+                                node.put("error", Constants.ERRORROWFULL);
+                                output.add(node);
+                            }
+                        } else {
                             node.put("command", action.getCommand());
                             node.put("handIdx", action.getHandIdx());
-                            node.put("error", Constants.ERRORROWFULL);
+                            node.put("error", Constants.ERRORNOTENOUGHMANA);
                             output.add(node);
                         }
                     } else {
-                        remakeHandAndDeck(card, action.getHandIdx());
                         node.put("command", action.getCommand());
                         node.put("handIdx", action.getHandIdx());
                         node.put("error", Constants.ERRORENVONTABLE);
                         output.add(node);
                     }
-                } else {
-                    node.put("command", action.getCommand());
-                    node.put("handIdx", action.getHandIdx());
-                    node.put("error", Constants.ERRORNOTENOUGHMANA);
-                    output.add(node);
                 }
             }
             case (Constants.GETPLAYERMANA) -> {
@@ -161,7 +163,6 @@ public final class GameWorkFlow {
                 rows.add(Functions.createArrayNodeFromCards(table.getRowTwoPlayerOne()));
                 rows.add(Functions.createArrayNodeFromCards(table.getRowOnePlayerOne()));
                 node.set("output", rows);
-
                 output.add(node);
             }
             case (Constants.GETENVCARDSINHAND) -> {
@@ -186,25 +187,57 @@ public final class GameWorkFlow {
             }
             case (Constants.USEENVCARD) -> {
                 ObjectNode node = MAPPER.createObjectNode();
-                Card card = takeCardFromHand(action.getHandIdx());
-                if (card != null) {
-                    if (card.getAttribute().compareTo(Constants.ENVIRONMENT) == 0) {
-                        table.useEnvCardOnRow(card, action.getAffectedRow());
+                Card cardToBePlayed = getCard(action.getHandIdx());
+                if (cardToBePlayed != null) {
+                    if (cardToBePlayed.getAttribute().compareTo(Constants.ENVIRONMENT) == 0) {
+                        if (cardToBePlayed.getInstance().getMana() <= getPlayerMana(turn)) {
+                            if (checkRow(action.getAffectedRow())) {
+                                if (cardToBePlayed.getInstance().getName()
+                                        .compareTo(Constants.HEARTHOUND) == 0) {
+                                    if (table.isRowNotFull(
+                                            table.getMirrorRow(action.getAffectedRow()))) {
+                                        Card card = takeCardFromHand(action.getHandIdx());
+                                        table.useEnvCardOnRow(card, action.getAffectedRow());
+                                    } else {
+                                        node.put("command", action.getCommand());
+                                        node.put("handIdx", action.getHandIdx());
+                                        node.put("affectedRow", action.getAffectedRow());
+                                        node.put("error", Constants.ERROECANNOTSTEAL);
+                                        output.add(node);
+                                    }
+                                } else {
+                                    Card card = takeCardFromHand(action.getHandIdx());
+                                    table.useEnvCardOnRow(card, action.getAffectedRow());
+                                }
+                            } else {
+                                node.put("command", action.getCommand());
+                                node.put("handIdx", action.getHandIdx());
+                                node.put("affectedRow", action.getAffectedRow());
+                                node.put("affectedRow", action.getAffectedRow());
+                                node.put("error", Constants.ERRORNOTENEMYROW);
+                                output.add(node);
+                            }
+                        } else {
+                            node.put("command", action.getCommand());
+                            node.put("handIdx", action.getHandIdx());
+                            node.put("affectedRow", action.getAffectedRow());
+                            node.put("error", Constants.ERRORNOTENOUGHMANAENV);
+                            output.add(node);
+                        }
                     } else {
-                        remakeHandAndDeck(card, action.getHandIdx());
                         node.put("command", action.getCommand());
                         node.put("handIdx", action.getHandIdx());
                         node.put("affectedRow", action.getAffectedRow());
                         node.put("error", Constants.ERRORNOTENVCARD);
                         output.add(node);
                     }
-                } else {
-                    node.put("command", action.getCommand());
-                    node.put("handIdx", action.getHandIdx());
-                    node.put("affectedRow", action.getAffectedRow());
-                    node.put("error", Constants.ERRORNOTENOUGHMANA);
-                    output.add(node);
                 }
+            }
+            case (Constants.GETFROZENCARDS) -> {
+                ObjectNode node = MAPPER.createObjectNode();
+                node.put("command", action.getCommand());
+                node.set("output", Functions.createArrayNodeFromCards(table.getFrozenCards()));
+                output.add(node);
             }
             default -> {
             }
@@ -246,8 +279,16 @@ public final class GameWorkFlow {
         return playerTwo.takeCardFromHand(cardIdx);
     }
 
+    private Card getCard(final int cardIdx) {
+        if (turn == 1) {
+            return playerOne.getCard(cardIdx);
+        }
+        return playerTwo.getCard(cardIdx);
+    }
+
     public void updatePlayerTurn() {
         count++;
+        table.unfreezeMinions(turn);
         if (turn == 1) {
             turn = 2;
             enemy = 1;
@@ -267,7 +308,6 @@ public final class GameWorkFlow {
             playerTwo.addMana(mana);
             playerOne.addCardToHandFromDeck();
             playerTwo.addCardToHandFromDeck();
-            table.unfreezeMinions();
         }
     }
 
@@ -284,5 +324,15 @@ public final class GameWorkFlow {
         } else {
             playerTwo.remakeHandAndDeck(card, handIdx);
         }
+    }
+
+    private boolean checkRow(final int row) {
+        if (turn == Constants.ONE && (row == Constants.TWO || row == Constants.THREE)) {
+            return false;
+        }
+        if (turn == Constants.TWO && (row == Constants.ZERO || row == Constants.ONE)) {
+            return false;
+        }
+        return true;
     }
 }

@@ -138,18 +138,86 @@ public final class Table {
         row.removeIf(card -> card.getInstance().getHealth() < 1);
     }
 
-    public void unfreezeMinions() {
-        for (Card card : rowOnePlayerOne) {
-            card.freeze(Constants.ISNOTFROZEN);
+    public void unfreezeMinions(final int playerIdx) {
+
+        if (playerIdx == 1) {
+            for (Card card : rowTwoPlayerOne) {
+                card.freeze(Constants.ISNOTFROZEN);
+            }
+            for (Card card : rowOnePlayerOne) {
+                card.freeze(Constants.ISNOTFROZEN);
+            }
+        } else {
+            for (Card card : rowOnePlayerTwo) {
+                card.freeze(Constants.ISNOTFROZEN);
+            }
+            for (Card card : rowTwoPlayerTwo) {
+                card.freeze(Constants.ISNOTFROZEN);
+            }
         }
+
+    }
+
+    public ArrayList<Card> getFrozenCards() {
+        ArrayList<Card> frozenCards = new ArrayList<>();
         for (Card card : rowOnePlayerTwo) {
-            card.freeze(Constants.ISNOTFROZEN);
+            if (card.isFrozen()) {
+                frozenCards.add(card);
+            }
         }
-        for (Card card : rowTwoPlayerOne) {
-            card.freeze(Constants.ISNOTFROZEN);
-        }
+
         for (Card card : rowTwoPlayerTwo) {
-            card.freeze(Constants.ISNOTFROZEN);
+            if (card.isFrozen()) {
+                frozenCards.add(card);
+            }
+        }
+
+        for (Card card : rowTwoPlayerOne) {
+            if (card.isFrozen()) {
+                frozenCards.add(card);
+            }
+        }
+
+        for (Card card : rowTwoPlayerOne) {
+            if (card.isFrozen()) {
+                frozenCards.add(card);
+            }
+        }
+
+        return frozenCards;
+    }
+
+    public int getMirrorRow(final int row) {
+        if (row == Constants.ZERO) {
+            return Constants.THREE;
+        } else if (row == Constants.THREE) {
+            return Constants.ZERO;
+        } else if (row == Constants.TWO) {
+            return Constants.ONE;
+        } else if (row == Constants.ONE) {
+            return Constants.TWO;
+        }
+
+        return 0;
+    }
+
+    public boolean isRowNotFull(final int row) {
+        switch (row) {
+            case (Constants.ZERO) -> {
+                return rowOnePlayerTwo.size() < Constants.MAXCARDS;
+            }
+            case (Constants.ONE) -> {
+                return rowTwoPlayerTwo.size() < Constants.MAXCARDS;
+            }
+            case (Constants.TWO) -> {
+                return rowTwoPlayerOne.size() < Constants.MAXCARDS;
+            }
+            case (Constants.THREE) -> {
+                return rowOnePlayerOne.size() < Constants.MAXCARDS;
+            }
+            default -> {
+                return false;
+            }
         }
     }
 }

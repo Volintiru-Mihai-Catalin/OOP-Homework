@@ -23,6 +23,9 @@
     "name" : "The Ripper"
   }
 }, {
+  "command" : "getFrozenCardsOnTable",
+  "output" : [ ]
+}, {
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
