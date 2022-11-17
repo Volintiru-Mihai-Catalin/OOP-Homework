@@ -71,7 +71,7 @@ public final class Constants {
     public static final String ERROECANNOTSTEAL =
                                     "Cannot steal enemy card since the player's row is full.";
     public static final int STATUSOK = 0;
-    public static final int ERRORSTATUSONE = 1;
+    public static final int ERRORSTATUS = 1;
 
     // Gameplay constants
     public static final Integer HEROHP = 30;

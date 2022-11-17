@@ -11,7 +11,6 @@ import fileio.GameInput;
 import fileio.ActionsInput;
 import gameobjects.Player;
 import utils.Constants;
-import utils.Functions;
 import gameobjects.Table;
 
 import java.util.ArrayList;
@@ -83,25 +82,17 @@ public final class GameWorkFlow {
     }
 
     private void performAction(final ActionsInput action, final ArrayNode output) {
+        ObjectNode node = MAPPER.createObjectNode();
         switch (action.getCommand()) {
             case (Constants.GETPLAYERDECK) -> {
-                ObjectNode node = MAPPER.createObjectNode();
-                node.put("command", action.getCommand());
-                node.put("playerIdx", action.getPlayerIdx());
-                node.set("output",
-                        Functions.createArrayNodeFromCards(getPlayerDeck(action.getPlayerIdx())));
-                output.add(node);
+                Commands.printPlayerDeck(output, node, action.getPlayerIdx(),
+                                        getPlayerDeck(action.getPlayerIdx()));
             }
             case (Constants.GETPLAYERHERO) -> {
-                ObjectNode node = MAPPER.createObjectNode();
-                node.put("command", action.getCommand());
-                node.put("playerIdx", action.getPlayerIdx());
-                node.set("output",
-                    Functions.createNodeFromHeroCard(getPlayerHero(action.getPlayerIdx()).get(0)));
-                output.add(node);
+                Commands.printPlayerHero(output, node, action.getPlayerIdx(),
+                                    getPlayerHero(action.getPlayerIdx()).get(0));
             }
             case (Constants.GETPLAYERTURN) -> {
-                ObjectNode node = MAPPER.createObjectNode();
                 node.put("command", action.getCommand());
                 node.put("output", turn);
                 output.add(node);
@@ -111,15 +102,10 @@ public final class GameWorkFlow {
                 updateRound();
             }
             case (Constants.GETCARDSINHAND) -> {
-                ObjectNode node = MAPPER.createObjectNode();
-                node.put("command", action.getCommand());
-                node.put("playerIdx", action.getPlayerIdx());
-                node.set("output",
-                        Functions.createArrayNodeFromCards(getCardsInHand(action.getPlayerIdx())));
-                output.add(node);
+                Commands.printCardsInHand(output, node, action.getPlayerIdx(),
+                                            getCardsInHand(action.getPlayerIdx()));
             }
             case (Constants.PLACECARD) -> {
-                ObjectNode node = MAPPER.createObjectNode();
                 Card cardToBePlayed = getCard(action.getHandIdx());
                 if (cardToBePlayed != null) {
                     if (cardToBePlayed.getAttribute().compareTo(Constants.MINION) == 0) {
@@ -128,65 +114,37 @@ public final class GameWorkFlow {
                             boolean isOnTable = table.playCard(card, turn);
                             if (!isOnTable) {
                                 remakeHandAndDeck(card, action.getHandIdx());
-                                node.put("command", action.getCommand());
-                                node.put("handIdx", action.getHandIdx());
-                                node.put("error", Constants.ERRORROWFULL);
-                                output.add(node);
+                                Commands.printPlaceCardError(output, node,
+                                        action.getHandIdx(), Constants.ERRORROWFULL);
                             }
                         } else {
-                            node.put("command", action.getCommand());
-                            node.put("handIdx", action.getHandIdx());
-                            node.put("error", Constants.ERRORNOTENOUGHMANA);
-                            output.add(node);
+                            Commands.printPlaceCardError(output, node,
+                                    action.getHandIdx(), Constants.ERRORNOTENOUGHMANA);
                         }
                     } else {
-                        node.put("command", action.getCommand());
-                        node.put("handIdx", action.getHandIdx());
-                        node.put("error", Constants.ERRORENVONTABLE);
-                        output.add(node);
+                        Commands.printPlaceCardError(output, node,
+                                action.getHandIdx(), Constants.ERRORENVONTABLE);
                     }
                 }
             }
             case (Constants.GETPLAYERMANA) -> {
-                ObjectNode node = MAPPER.createObjectNode();
-                node.put("command", action.getCommand());
-                node.put("playerIdx", action.getPlayerIdx());
-                node.put("output", getPlayerMana(action.getPlayerIdx()));
-                output.add(node);
+                Commands.printPlayerMana(output, node, action.getPlayerIdx(),
+                        getPlayerMana(action.getPlayerIdx()));
             }
             case (Constants.GETCARDSONTABLE) -> {
-                ObjectNode node = MAPPER.createObjectNode();
-                ArrayNode rows = MAPPER.createArrayNode();
-                node.put("command", action.getCommand());
-                rows.add(Functions.createArrayNodeFromCards(table.getRowOnePlayerTwo()));
-                rows.add(Functions.createArrayNodeFromCards(table.getRowTwoPlayerTwo()));
-                rows.add(Functions.createArrayNodeFromCards(table.getRowTwoPlayerOne()));
-                rows.add(Functions.createArrayNodeFromCards(table.getRowOnePlayerOne()));
-                node.set("output", rows);
-                output.add(node);
+                Commands.printTable(output, node, table, MAPPER.createArrayNode());
             }
             case (Constants.GETENVCARDSINHAND) -> {
-                ObjectNode node = MAPPER.createObjectNode();
-                node.put("command", action.getCommand());
-                node.put("playerIdx", action.getPlayerIdx());
-                node.set("output",
-                    Functions.createArrayNodeFromCards(getEnvCardsInHand(action.getPlayerIdx())));
-                output.add(node);
+                Commands.printEnvInHand(output, node, action.getPlayerIdx(),
+                        getEnvCardsInHand(action.getPlayerIdx()));
             }
             case (Constants.GETCARDATPOSITION) -> {
                 Card card = table.getCardAtPosition(action.getX(), action.getY());
                 if (card != null) {
-                    ObjectNode node = MAPPER.createObjectNode();
-                    node.put("command", action.getCommand());
-                    node.put("x", action.getX());
-                    node.put("y", action.getY());
-                    node.set("output",
-                            Functions.createNodeFromMinionOrEnvCard(card));
-                    output.add(node);
+                    Commands.printCardAtPos(output, node, action.getX(), action.getY(), card);
                 }
             }
             case (Constants.USEENVCARD) -> {
-                ObjectNode node = MAPPER.createObjectNode();
                 Card cardToBePlayed = getCard(action.getHandIdx());
                 if (cardToBePlayed != null) {
                     if (cardToBePlayed.getAttribute().compareTo(Constants.ENVIRONMENT) == 0) {
@@ -199,45 +157,30 @@ public final class GameWorkFlow {
                                         Card card = takeCardFromHand(action.getHandIdx());
                                         table.useEnvCardOnRow(card, action.getAffectedRow());
                                     } else {
-                                        node.put("command", action.getCommand());
-                                        node.put("handIdx", action.getHandIdx());
-                                        node.put("affectedRow", action.getAffectedRow());
-                                        node.put("error", Constants.ERROECANNOTSTEAL);
-                                        output.add(node);
+                                        Commands.printEnvUseErors(output, node,
+                                               action.getAffectedRow(), Constants.ERROECANNOTSTEAL,
+                                               action.getHandIdx());
                                     }
                                 } else {
                                     Card card = takeCardFromHand(action.getHandIdx());
                                     table.useEnvCardOnRow(card, action.getAffectedRow());
                                 }
                             } else {
-                                node.put("command", action.getCommand());
-                                node.put("handIdx", action.getHandIdx());
-                                node.put("affectedRow", action.getAffectedRow());
-                                node.put("affectedRow", action.getAffectedRow());
-                                node.put("error", Constants.ERRORNOTENEMYROW);
-                                output.add(node);
+                                Commands.printEnvUseErors(output, node, action.getAffectedRow(),
+                                        Constants.ERRORNOTENEMYROW, action.getHandIdx());
                             }
                         } else {
-                            node.put("command", action.getCommand());
-                            node.put("handIdx", action.getHandIdx());
-                            node.put("affectedRow", action.getAffectedRow());
-                            node.put("error", Constants.ERRORNOTENOUGHMANAENV);
-                            output.add(node);
+                            Commands.printEnvUseErors(output, node, action.getAffectedRow(),
+                                    Constants.ERRORNOTENOUGHMANAENV, action.getHandIdx());
                         }
                     } else {
-                        node.put("command", action.getCommand());
-                        node.put("handIdx", action.getHandIdx());
-                        node.put("affectedRow", action.getAffectedRow());
-                        node.put("error", Constants.ERRORNOTENVCARD);
-                        output.add(node);
+                        Commands.printEnvUseErors(output, node, action.getAffectedRow(),
+                                Constants.ERRORNOTENVCARD, action.getHandIdx());
                     }
                 }
             }
             case (Constants.GETFROZENCARDS) -> {
-                ObjectNode node = MAPPER.createObjectNode();
-                node.put("command", action.getCommand());
-                node.set("output", Functions.createArrayNodeFromCards(table.getFrozenCards()));
-                output.add(node);
+                Commands.printFrozenCards(output, node, table);
             }
             default -> {
             }
