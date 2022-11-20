@@ -220,4 +220,50 @@ public final class Table {
             }
         }
     }
+
+    public boolean hasTank(final int playerIdx) {
+        if (playerIdx == 1) {
+            for (Card card : rowTwoPlayerOne) {
+                if (card.getPower().compareTo(Constants.TANK) == 0) {
+                    return true;
+                }
+            }
+            for (Card card : rowOnePlayerOne) {
+                if (card.getPower().compareTo(Constants.TANK) == 0) {
+                    return true;
+                }
+            }
+        } else {
+            for (Card card : rowOnePlayerTwo) {
+                if (card.getPower().compareTo(Constants.TANK) == 0) {
+                    return true;
+                }
+            }
+            for (Card card : rowTwoPlayerTwo) {
+                if (card.getPower().compareTo(Constants.TANK) == 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void makeMinionsAbleToAttack(final int playerIdx) {
+        if (playerIdx == 1) {
+            for (Card card : rowTwoPlayerOne) {
+                ((Minion) card).setAttacked(Constants.HASNOTATACKED);
+            }
+            for (Card card : rowOnePlayerOne) {
+                ((Minion) card).setAttacked(Constants.HASNOTATACKED);
+            }
+        } else {
+            for (Card card : rowOnePlayerTwo) {
+                ((Minion) card).setAttacked(Constants.HASNOTATACKED);
+            }
+            for (Card card : rowTwoPlayerTwo) {
+                ((Minion) card).setAttacked(Constants.HASNOTATACKED);
+            }
+        }
+    }
 }

@@ -17,6 +17,12 @@ public final class Constants {
     public static final String GETCARDATPOSITION = "getCardAtPosition";
     public static final String USEENVCARD = "useEnvironmentCard";
     public static final String GETFROZENCARDS = "getFrozenCardsOnTable";
+    public static final String USEATTACK = "cardUsesAttack";
+    public static final String ERRORALREADYATTACKED =
+            "Attacker card has already attacked this turn.";
+    public static final String ERRORATACKERFROZEN = "Attacker card is frozen.";
+    public static final String ERRORNOTTANK = "Attacked card is not of type 'Tank'.";
+    public static final String ERRORNOTFOUND = "No card available at that position.";
 
     // Card types
     public static final String MINION = "Minion";
@@ -42,6 +48,7 @@ public final class Constants {
     public static final String WEAKKNEES = "Weak Knees";
     public static final String SKYJACK = "Skyjack";
     public static final String SHAPESHIFT = "Shapeshift";
+    public static final String NOPOWER = "No power";
 
     // Hero cards
     public static final String LORDROYCE = "Lord Royce";
@@ -70,6 +77,8 @@ public final class Constants {
     public static final String ERRORNOTENEMYROW = "Chosen row does not belong to the enemy.";
     public static final String ERROECANNOTSTEAL =
                                     "Cannot steal enemy card since the player's row is full.";
+    public static final String ERRORCANNOTATACKFRIENDLY =
+            "Attacked card does not belong to the enemy.";
     public static final int STATUSOK = 0;
     public static final int ERRORSTATUS = 1;
 
@@ -79,6 +88,8 @@ public final class Constants {
     public static final Integer MAXCARDS = 5;
     public static final boolean ISFROZEN = true;
     public static final boolean ISNOTFROZEN = false;
+    public static final boolean HASATACKED = true;
+    public static final boolean HASNOTATACKED = false;
     public static final int ZERO = 0;
     public static final int ONE = 1;
     public static final int TWO = 2;

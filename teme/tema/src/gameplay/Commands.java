@@ -1,7 +1,9 @@
 package gameplay;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.Coordinates;
 import gameobjects.Card;
 import gameobjects.Table;
 import utils.Constants;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 
 
 public final class Commands {
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private Commands() {
     }
@@ -151,8 +155,8 @@ public final class Commands {
      * @param error the error
      * @param handIdx the index of the env card in hand
      */
-    public static void printEnvUseErors(final ArrayNode output, final ObjectNode node,
-                                        final int row, final String error, final int handIdx) {
+    public static void printEnvUseErrors(final ArrayNode output, final ObjectNode node,
+                                         final int row, final String error, final int handIdx) {
         node.put("command", Constants.USEENVCARD);
         node.put("handIdx", handIdx);
         node.put("affectedRow", row);
@@ -164,12 +168,54 @@ public final class Commands {
      *
      * @param output the output json object
      * @param node the node json object
-     * @param table
+     * @param table the table
      */
     public static void printFrozenCards(final ArrayNode output, final ObjectNode node,
                                         final Table table) {
         node.put("command", Constants.GETFROZENCARDS);
         node.set("output", Functions.createArrayNodeFromCards(table.getFrozenCards()));
+        output.add(node);
+    }
+
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param attacked the card that is attacked
+     * @param attacker the card that is attacking
+     * @param error the error
+     */
+    public static void printUseAttackErrors(final ArrayNode output, final ObjectNode node,
+                                            final Coordinates attacked, final Coordinates attacker,
+                                            final String error) {
+
+        node.put("command", Constants.USEATTACK);
+        ObjectNode attackedNode = MAPPER.createObjectNode();
+        ObjectNode attackerNode = MAPPER.createObjectNode();
+        attackerNode.put("x", attacker.getX());
+        attackerNode.put("y", attacker.getY());
+        attackedNode.put("x", attacked.getX());
+        attackedNode.put("y", attacked.getY());
+        node.set("cardAttacker", attackerNode);
+        node.set("cardAttacked", attackedNode);
+        node.put("error", error);
+        output.add(node);
+    }
+
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param x coordinate on X axis
+     * @param y coordinate on Y axis
+     * @param error the error
+     */
+    public static void printCardAtPosErrors(final ArrayNode output, final ObjectNode node,
+                                            final int x, final int y, final String error) {
+        node.put("command", Constants.GETCARDATPOSITION);
+        node.put("x", x);
+        node.put("y", y);
+        node.put("output", error);
         output.add(node);
     }
 

@@ -3,15 +3,17 @@ package gameplay;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import gameobjects.Card;
-import gameobjects.CardsConvertor;
-import fileio.CardInput;
+import fileio.Coordinates;
 import fileio.Input;
 import fileio.GameInput;
 import fileio.ActionsInput;
-import gameobjects.Player;
-import utils.Constants;
+import fileio.CardInput;
 import gameobjects.Table;
+import gameobjects.Player;
+import gameobjects.Card;
+import gameobjects.CardsConvertor;
+import gameobjects.Minion;
+import utils.Constants;
 
 import java.util.ArrayList;
 
@@ -142,6 +144,9 @@ public final class GameWorkFlow {
                 Card card = table.getCardAtPosition(action.getX(), action.getY());
                 if (card != null) {
                     Commands.printCardAtPos(output, node, action.getX(), action.getY(), card);
+                } else {
+                    Commands.printCardAtPosErrors(output, node, action.getX(), action.getY(),
+                                    Constants.ERRORNOTFOUND);
                 }
             }
             case (Constants.USEENVCARD) -> {
@@ -157,7 +162,7 @@ public final class GameWorkFlow {
                                         Card card = takeCardFromHand(action.getHandIdx());
                                         table.useEnvCardOnRow(card, action.getAffectedRow());
                                     } else {
-                                        Commands.printEnvUseErors(output, node,
+                                        Commands.printEnvUseErrors(output, node,
                                                action.getAffectedRow(), Constants.ERROECANNOTSTEAL,
                                                action.getHandIdx());
                                     }
@@ -166,21 +171,66 @@ public final class GameWorkFlow {
                                     table.useEnvCardOnRow(card, action.getAffectedRow());
                                 }
                             } else {
-                                Commands.printEnvUseErors(output, node, action.getAffectedRow(),
+                                Commands.printEnvUseErrors(output, node, action.getAffectedRow(),
                                         Constants.ERRORNOTENEMYROW, action.getHandIdx());
                             }
                         } else {
-                            Commands.printEnvUseErors(output, node, action.getAffectedRow(),
+                            Commands.printEnvUseErrors(output, node, action.getAffectedRow(),
                                     Constants.ERRORNOTENOUGHMANAENV, action.getHandIdx());
                         }
                     } else {
-                        Commands.printEnvUseErors(output, node, action.getAffectedRow(),
+                        Commands.printEnvUseErrors(output, node, action.getAffectedRow(),
                                 Constants.ERRORNOTENVCARD, action.getHandIdx());
                     }
                 }
             }
             case (Constants.GETFROZENCARDS) -> {
                 Commands.printFrozenCards(output, node, table);
+            }
+            case (Constants.USEATTACK) -> {
+                Coordinates attacked = action.getCardAttacked();
+                Coordinates attacker = action.getCardAttacker();
+                if (checkRow(attacked.getX())) {
+                    Card cardAttacker = table.getCardAtPosition(attacker.getX(), attacker.getY());
+                    Card cardAttacked = table.getCardAtPosition(attacked.getX(), attacked.getY());
+                    if (cardAttacker != null) {
+                        if (((Minion) cardAttacker).hasAttacked()) {
+                            Commands.printUseAttackErrors(output, node, attacked, attacker,
+                                    Constants.ERRORALREADYATTACKED);
+                        } else {
+                            if (cardAttacker.isFrozen()) {
+                                Commands.printUseAttackErrors(output, node, attacked, attacker,
+                                        Constants.ERRORATACKERFROZEN);
+                            } else {
+                                if (cardAttacked != null) {
+                                    if (table.hasTank(enemy)) {
+                                        if (cardAttacked.getPower().
+                                                                compareTo(Constants.TANK) != 0) {
+                                            Commands.printUseAttackErrors(output, node, attacked,
+                                                    attacker, Constants.ERRORNOTTANK);
+                                        } else {
+                                            ((Minion) cardAttacker).
+                                                    setAttacked(Constants.HASATACKED);
+                                            cardAttacked.getInstance().setHealth(
+                                                    cardAttacked.getInstance().getHealth()
+                                                            - cardAttacker.getInstance()
+                                                                    .getAttackDamage());
+                                        }
+                                    } else {
+                                        ((Minion) cardAttacker).setAttacked(Constants.HASATACKED);
+                                        cardAttacked.getInstance().setHealth(
+                                                cardAttacked.getInstance().getHealth()
+                                                        - cardAttacker.getInstance()
+                                                        .getAttackDamage());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    Commands.printUseAttackErrors(output, node, attacked, attacker,
+                            Constants.ERRORCANNOTATACKFRIENDLY);
+                }
             }
             default -> {
             }
@@ -232,6 +282,11 @@ public final class GameWorkFlow {
     public void updatePlayerTurn() {
         count++;
         table.unfreezeMinions(turn);
+        table.removeDeadMinions(table.getRowOnePlayerOne());
+        table.removeDeadMinions(table.getRowOnePlayerTwo());
+        table.removeDeadMinions(table.getRowTwoPlayerOne());
+        table.removeDeadMinions(table.getRowTwoPlayerTwo());
+        table.makeMinionsAbleToAttack(turn);
         if (turn == 1) {
             turn = 2;
             enemy = 1;

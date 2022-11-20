@@ -110,14 +110,7 @@
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
-  } ], [ {
-    "mana" : 1,
-    "attackDamage" : 6,
-    "health" : 4,
-    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
-    "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
-  } ], [ {
+  } ], [ ], [ {
     "mana" : 2,
     "attackDamage" : 5,
     "health" : 1,
@@ -207,7 +200,7 @@
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 6,
+    "health" : 1,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -238,7 +231,7 @@
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 6,
+    "health" : 1,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -270,7 +263,7 @@
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 6,
+    "health" : 1,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -278,13 +271,6 @@
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
-    "mana" : 2,
-    "attackDamage" : 0,
-    "health" : 1,
-    "description" : "Premium card: The will of Gods has been spoken, obey and you shall be saved...or not.",
-    "colors" : [ "Green", "Yellow", "Blue" ],
-    "name" : "Disciple"
-  }, {
     "mana" : 2,
     "attackDamage" : 0,
     "health" : 3,
@@ -308,7 +294,7 @@
   } ], [ {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 6,
+    "health" : 1,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"

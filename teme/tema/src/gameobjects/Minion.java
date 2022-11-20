@@ -6,8 +6,9 @@ import utils.Constants;
 
 public final class Minion extends Card {
 
+    private boolean attacked;
     private boolean frozen;
-    private String power = null;
+    private String power;
     private final CardInput card;
     private Integer row = null;
 
@@ -21,6 +22,7 @@ public final class Minion extends Card {
             case (Constants.THECURSEDONE) -> setPower("Shapeshift");
             case (Constants.DISCIPLE) -> setPower("God's Plan");
             default -> {
+                setPower(Constants.NOPOWER);
             }
         }
         switch (card.getName()) {
@@ -49,7 +51,7 @@ public final class Minion extends Card {
     }
 
     public String getPower() {
-        return power;
+        return this.power;
     }
 
     public String getAttribute() {
@@ -61,6 +63,13 @@ public final class Minion extends Card {
         this.frozen = freeze;
     }
 
+    public void setAttacked(final boolean attacked) {
+        this.attacked = attacked;
+    }
+
+    public boolean hasAttacked() {
+        return this.attacked;
+    }
     public boolean isFrozen() {
         return this.frozen;
     }
