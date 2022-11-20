@@ -81,6 +81,7 @@ public final class GameWorkFlow {
         playerTwo.addMana(mana);
 
         table = new Table();
+        count = 0;
     }
 
     private void performAction(final ActionsInput action, final ArrayNode output) {

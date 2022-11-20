@@ -3,7 +3,7 @@ Starting audit...
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Environment.java:47:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Hero.java:55:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Minion.java:38:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Minion.java:91:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Minion.java:94:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Player.java:21:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Player.java:24:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Player.java:35:5: Missing a Javadoc comment. [MissingJavadocMethod]
@@ -23,9 +23,9 @@ Starting audit...
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Table.java:224:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Table.java:252:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:39:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:86:5: Method length is 210 lines (max allowed is 150). [MethodLength]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:339:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:353:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:391:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:87:5: Method length is 210 lines (max allowed is 150). [MethodLength]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:340:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:354:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:392:5: Missing a Javadoc comment. [MissingJavadocMethod]
 Audit done.
 Checkstyle ends with 28 errors.

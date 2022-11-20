@@ -38,8 +38,11 @@ public final class Minion extends Card {
     public static void usePower(final Card attacker, final Card attacked) {
         switch (attacker.getPower()) {
             case (Constants.WEAKKNEES) -> {
-                attacked.getInstance().setAttackDamage(attacked.getInstance().getAttackDamage()
-                                                                                - Constants.TWO);
+                int newAttack = attacked.getInstance().getAttackDamage() - Constants.TWO;
+                if (newAttack < Constants.ZERO) {
+                    newAttack = 0;
+                }
+                attacked.getInstance().setAttackDamage(newAttack);
             }
             case (Constants.SKYJACK) -> {
                 int aux = attacker.getInstance().getHealth();

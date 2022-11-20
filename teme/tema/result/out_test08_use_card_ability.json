@@ -71,11 +71,11 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 18
+  "output" : 11
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 14
+  "output" : 7
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
@@ -125,7 +125,7 @@
     "name" : "Miraj"
   } ], [ {
     "mana" : 2,
-    "attackDamage" : -2,
+    "attackDamage" : 0,
     "health" : 3,
     "description" : "Premium card: Nobody suspects an outcast, not even the Gods.",
     "colors" : [ "Black", "White", "Red" ],
@@ -146,11 +146,6 @@
     "description" : "Standard card: Death incarnate. No better time to die than now.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
-  }, {
-    "mana" : 1,
-    "description" : "Standard card: The dragon was unleashed, run for your lives.",
-    "colors" : [ "Blue", "Green", "White" ],
-    "name" : "Firestorm"
   } ]
 }, {
   "command" : "getCardsInHand",
@@ -165,7 +160,20 @@
     "description" : "Standard card: Corruption is easy, you always wanted it, now I help you embrace it.",
     "colors" : [ "Green", "Black" ],
     "name" : "Heart Hound"
-  }, {
+  } ]
+}, {
+  "command" : "getPlayerDeck",
+  "playerIdx" : 2,
+  "output" : [ {
+    "mana" : 1,
+    "description" : "Standard card: The dragon was unleashed, run for your lives.",
+    "colors" : [ "Blue", "Green", "White" ],
+    "name" : "Firestorm"
+  } ]
+}, {
+  "command" : "getPlayerDeck",
+  "playerIdx" : 1,
+  "output" : [ {
     "mana" : 2,
     "attackDamage" : 3,
     "health" : 1,
@@ -173,12 +181,4 @@
     "colors" : [ "Red", "Blue", "Pink" ],
     "name" : "Berserker"
   } ]
-}, {
-  "command" : "getPlayerDeck",
-  "playerIdx" : 2,
-  "output" : [ ]
-}, {
-  "command" : "getPlayerDeck",
-  "playerIdx" : 1,
-  "output" : [ ]
 } ]

@@ -55,11 +55,11 @@
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
-  "output" : 24
+  "output" : 15
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
-  "output" : 25
+  "output" : 16
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
