@@ -13,6 +13,7 @@ import gameobjects.Player;
 import gameobjects.Card;
 import gameobjects.CardsConvertor;
 import gameobjects.Minion;
+import gameobjects.Hero;
 import utils.Constants;
 
 import java.util.ArrayList;
@@ -334,6 +335,43 @@ public final class GameWorkFlow {
                     }
                 }
             }
+            case (Constants.USEHEROABILITY) -> {
+                Card hero = getHero();
+                if (getPlayerMana(turn) >= hero.getInstance().getMana()) {
+                    if (((Hero) hero).getHasAttacked()) {
+                        Commands.printHeroAbilityErrors(output, node, action.getAffectedRow(),
+                                Constants.ERRORHEROALREADYATTACKED);
+                    } else {
+                        if (hero.getInstance().getName().compareTo(Constants.LORDROYCE) == 0
+                        || hero.getInstance().getName().compareTo(Constants.EMPRESSTHORINA) == 0) {
+
+                            if (checkRow(action.getAffectedRow())) {
+                                ((Hero) hero).setHasAttacked(Constants.HASATACKED);
+                                decPlayerMana(turn, hero.getInstance().getMana());
+                                table.useHeroPowerOnRow(hero, action.getAffectedRow());
+                            } else {
+                                Commands.printHeroAbilityErrors(output, node,
+                                        action.getAffectedRow(), Constants.ERRORHEROWRONGROW1);
+                            }
+                        } else if (hero.getInstance().getName().
+                                                        compareTo(Constants.GENERALKOCIORAW) == 0
+                           || hero.getInstance().getName().compareTo(Constants.KINGMUDFACE) == 0) {
+
+                            if (!checkRow(action.getAffectedRow())) {
+                                ((Hero) hero).setHasAttacked(Constants.HASATACKED);
+                                decPlayerMana(turn, hero.getInstance().getMana());
+                                table.useHeroPowerOnRow(hero, action.getAffectedRow());
+                            } else {
+                                Commands.printHeroAbilityErrors(output, node,
+                                        action.getAffectedRow(), Constants.ERRORHEROWRONGROW2);
+                            }
+                        }
+                    }
+                } else {
+                    Commands.printHeroAbilityErrors(output, node, action.getAffectedRow(),
+                                                        Constants.ERRORNOTENOUGHMANAHERO);
+                }
+            }
             default -> {
             }
         }
@@ -386,6 +424,8 @@ public final class GameWorkFlow {
         table.unfreezeMinions(turn);
         clearDeadMinions();
         table.makeMinionsAbleToAttack(turn);
+        Card hero = getHero();
+        ((Hero) hero).setHasAttacked(Constants.HASNOTATACKED);
         if (turn == 1) {
             turn = 2;
             enemy = 1;
@@ -413,6 +453,15 @@ public final class GameWorkFlow {
             return playerOne.getMana();
         }
         return playerTwo.getMana();
+    }
+
+    private void decPlayerMana(final int playerIdx, final int amount) {
+        int manaDec = -1 * amount;
+        if (playerIdx == 1) {
+            playerOne.addMana(manaDec);
+        } else {
+            playerTwo.addMana(manaDec);
+        }
     }
 
     private void remakeHandAndDeck(final Card card, final int handIdx) {
@@ -453,6 +502,14 @@ public final class GameWorkFlow {
         if (hero.getInstance().getHealth() <= 0) {
             gameEnded = true;
             Commands.printEnfOfGame(output, node, turn);
+        }
+    }
+
+    public Card getHero() {
+        if (turn == 1) {
+            return playerOne.getHero().get(0);
+        } else {
+            return playerTwo.getHero().get(0);
         }
     }
 }

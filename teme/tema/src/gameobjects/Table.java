@@ -266,4 +266,15 @@ public final class Table {
             }
         }
     }
+
+    public void useHeroPowerOnRow(final Card hero, final int rowIdx) {
+        switch (rowIdx) {
+            case (Constants.ZERO) -> ((Hero) hero).usePower(rowOnePlayerTwo, this);
+            case (Constants.ONE) -> ((Hero) hero).usePower(rowTwoPlayerTwo, this);
+            case (Constants.TWO) -> ((Hero) hero).usePower(rowTwoPlayerOne, this);
+            case (Constants.THREE) -> ((Hero) hero).usePower(rowOnePlayerOne, this);
+            default -> {
+            }
+        }
+    }
 }

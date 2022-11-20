@@ -20,6 +20,7 @@ public final class Constants {
     public static final String USEATTACK = "cardUsesAttack";
     public static final String USEABILITY = "cardUsesAbility";
     public static final String ATTACKHERO = "useAttackHero";
+    public static final String USEHEROABILITY = "useHeroAbility";
 
 
     // Card types
@@ -78,6 +79,11 @@ public final class Constants {
     public static final String ERRORATACKERFROZEN = "Attacker card is frozen.";
     public static final String ERRORNOTTANK = "Attacked card is not of type 'Tank'.";
     public static final String ERRORNOTFOUND = "No card available at that position.";
+    public static final String ERRORNOTENOUGHMANAHERO = "Not enough mana to use hero's ability.";
+    public static final String ERRORHEROALREADYATTACKED = "Hero has already attacked this turn.";
+    public static final String ERRORHEROWRONGROW1 = "Selected row does not belong to the enemy.";
+    public static final String ERRORHEROWRONGROW2 =
+                                            "Selected row does not belong to the current player.";
 
     // Gameplay constants
     public static final String PLAYERONE = "one";

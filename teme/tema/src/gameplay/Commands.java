@@ -279,4 +279,12 @@ public final class Commands {
         output.add(node);
     }
 
+    public static void printHeroAbilityErrors(final ArrayNode output, final ObjectNode node,
+                                              final int affRow, final String error) {
+        node.put("command", Constants.USEHEROABILITY);
+        node.put("affectedRow", affRow);
+        node.put("error", error);
+        output.add(node);
+    }
+
 }
