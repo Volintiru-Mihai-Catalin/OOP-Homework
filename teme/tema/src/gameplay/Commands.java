@@ -279,11 +279,49 @@ public final class Commands {
         output.add(node);
     }
 
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param affRow the affected row
+     * @param error the error
+     */
     public static void printHeroAbilityErrors(final ArrayNode output, final ObjectNode node,
                                               final int affRow, final String error) {
         node.put("command", Constants.USEHEROABILITY);
         node.put("affectedRow", affRow);
         node.put("error", error);
+        output.add(node);
+    }
+
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param playerIdx the player
+     * @param wins number of wins
+     */
+    public static void printWins(final ArrayNode output, final ObjectNode node,
+                                                    final int playerIdx, final int wins) {
+        if (playerIdx == 1) {
+            node.put("command", Constants.GETPLAYERONEWINS);
+        } else {
+            node.put("command", Constants.GETPLAYERTWOWINS);
+        }
+        node.put("output", wins);
+        output.add(node);
+    }
+
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param games the total number of games played
+     */
+    public static void printGames(final ArrayNode output, final ObjectNode node,
+                                 final int games) {
+        node.put("command", Constants.GETTOTALGAMES);
+        node.put("output", games);
         output.add(node);
     }
 

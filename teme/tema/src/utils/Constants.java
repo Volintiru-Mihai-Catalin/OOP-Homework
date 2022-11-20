@@ -21,6 +21,9 @@ public final class Constants {
     public static final String USEABILITY = "cardUsesAbility";
     public static final String ATTACKHERO = "useAttackHero";
     public static final String USEHEROABILITY = "useHeroAbility";
+    public static final String GETPLAYERONEWINS = "getPlayerOneWins";
+    public static final String GETPLAYERTWOWINS = "getPlayerTwoWins";
+    public static final String GETTOTALGAMES = "getTotalGamesPlayed";
 
 
     // Card types

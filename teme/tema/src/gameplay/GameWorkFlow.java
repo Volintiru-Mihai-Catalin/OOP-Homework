@@ -32,6 +32,9 @@ public final class GameWorkFlow {
 
     private static int enemy = 0;
     private static int mana = 0;
+
+    private static int playerOneWins;
+    private static int playerTwoWins;
     private static boolean gameEnded = false;
     public GameWorkFlow(final Input inputData) {
         this.inputData = inputData;
@@ -39,6 +42,8 @@ public final class GameWorkFlow {
     }
 
     public void startAllGames(final ArrayNode output) {
+        playerOneWins = 0;
+        playerTwoWins = 0;
         for (GameInput game : gameInput) {
             startGame(game);
             for (ActionsInput action : game.getActions()) {
@@ -336,6 +341,9 @@ public final class GameWorkFlow {
                 }
             }
             case (Constants.USEHEROABILITY) -> {
+                if (gameEnded) {
+                    break;
+                }
                 Card hero = getHero();
                 if (getPlayerMana(turn) >= hero.getInstance().getMana()) {
                     if (((Hero) hero).getHasAttacked()) {
@@ -371,6 +379,15 @@ public final class GameWorkFlow {
                     Commands.printHeroAbilityErrors(output, node, action.getAffectedRow(),
                                                         Constants.ERRORNOTENOUGHMANAHERO);
                 }
+            }
+            case (Constants.GETPLAYERONEWINS) -> {
+                Commands.printWins(output, node, Constants.ONE, playerOneWins);
+            }
+            case (Constants.GETPLAYERTWOWINS) -> {
+                Commands.printWins(output, node, Constants.TWO, playerTwoWins);
+            }
+            case (Constants.GETTOTALGAMES) -> {
+                Commands.printGames(output, node, playerTwoWins + playerOneWins);
             }
             default -> {
             }
@@ -500,6 +517,11 @@ public final class GameWorkFlow {
         hero.getInstance().setHealth(hero.getInstance().getHealth()
                 - attacker.getInstance().getAttackDamage());
         if (hero.getInstance().getHealth() <= 0) {
+            if (turn == 1) {
+                playerOneWins++;
+            } else {
+                playerTwoWins++;
+            }
             gameEnded = true;
             Commands.printEnfOfGame(output, node, turn);
         }
