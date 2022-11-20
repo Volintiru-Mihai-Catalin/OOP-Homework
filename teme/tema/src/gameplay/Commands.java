@@ -219,4 +219,29 @@ public final class Commands {
         output.add(node);
     }
 
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param attacked the card that is attacked
+     * @param attacker the card that is attacking
+     * @param error the error
+     */
+    public static void printUseAbilityErrors(final ArrayNode output, final ObjectNode node,
+                                            final Coordinates attacked, final Coordinates attacker,
+                                            final String error) {
+
+        node.put("command", Constants.USEABILITY);
+        ObjectNode attackedNode = MAPPER.createObjectNode();
+        ObjectNode attackerNode = MAPPER.createObjectNode();
+        attackerNode.put("x", attacker.getX());
+        attackerNode.put("y", attacker.getY());
+        attackedNode.put("x", attacked.getX());
+        attackedNode.put("y", attacked.getY());
+        node.set("cardAttacker", attackerNode);
+        node.set("cardAttacked", attackedNode);
+        node.put("error", error);
+        output.add(node);
+    }
+
 }

@@ -97,7 +97,7 @@
   } ], [ {
     "mana" : 2,
     "attackDamage" : 5,
-    "health" : 3,
+    "health" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj"
@@ -118,7 +118,7 @@
   }, {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 4,
+    "health" : 3,
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj"
@@ -194,8 +194,8 @@
   "y" : 0,
   "output" : {
     "mana" : 1,
-    "attackDamage" : 7,
-    "health" : 5,
+    "attackDamage" : 5,
+    "health" : 7,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -231,8 +231,8 @@
   "y" : 0,
   "output" : {
     "mana" : 1,
-    "attackDamage" : 7,
-    "health" : 5,
+    "attackDamage" : 5,
+    "health" : 7,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
@@ -270,8 +270,8 @@
     "name" : "Berserker"
   } ], [ ], [ {
     "mana" : 1,
-    "attackDamage" : 7,
-    "health" : 5,
+    "attackDamage" : 5,
+    "health" : 7,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"

@@ -204,8 +204,8 @@ public final class GameWorkFlow {
                             } else {
                                 if (cardAttacked != null) {
                                     if (table.hasTank(enemy)) {
-                                        if (cardAttacked.getPower().
-                                                                compareTo(Constants.TANK) != 0) {
+                                        if (cardAttacked.getPower()
+                                                        .compareTo(Constants.TANK) != 0) {
                                             Commands.printUseAttackErrors(output, node, attacked,
                                                     attacker, Constants.ERRORNOTTANK);
                                         } else {
@@ -230,6 +230,63 @@ public final class GameWorkFlow {
                 } else {
                     Commands.printUseAttackErrors(output, node, attacked, attacker,
                             Constants.ERRORCANNOTATACKFRIENDLY);
+                }
+            }
+            case (Constants.USEABILITY) -> {
+                Coordinates attacked = action.getCardAttacked();
+                Coordinates attacker = action.getCardAttacker();
+                Card cardAttacker = table.getCardAtPosition(attacker.getX(), attacker.getY());
+                Card cardAttacked = table.getCardAtPosition(attacked.getX(), attacked.getY());
+                if (cardAttacker != null) {
+                    if (cardAttacker.isFrozen()) {
+                        Commands.printUseAbilityErrors(output, node, attacked, attacker,
+                                Constants.ERRORATACKERFROZEN);
+                    } else {
+                        if (((Minion) cardAttacker).hasAttacked()) {
+                            Commands.printUseAbilityErrors(output, node, attacked, attacker,
+                                    Constants.ERRORALREADYATTACKED);
+                        } else {
+                            if (cardAttacked != null) {
+                                if (cardAttacker.getInstance().getName().
+                                        compareTo(Constants.DISCIPLE) == 0) {
+                                    if (!checkRow(attacked.getX())) {
+                                        ((Minion) cardAttacker).setAttacked(Constants.HASATACKED);
+                                        Minion.usePower(cardAttacker, cardAttacked);
+                                    } else {
+                                        Commands.printUseAbilityErrors(output, node, attacked,
+                                                attacker, Constants.ERRORNOTFRIENDLYCARD);
+                                    }
+                                } else if (cardAttacker.getInstance().getName()
+                                                        .compareTo(Constants.THERIPPER) == 0
+                                        || cardAttacker.getInstance().getName()
+                                                        .compareTo(Constants.MIRAJ) == 0
+                                        || cardAttacker.getInstance().getName()
+                                                        .compareTo(Constants.THECURSEDONE) == 0) {
+                                    if (checkRow(attacked.getX())) {
+                                        if (table.hasTank(enemy)) {
+                                            if (cardAttacked.getPower()
+                                                            .compareTo(Constants.TANK) != 0) {
+                                                Commands.printUseAbilityErrors(output, node,
+                                                       attacked, attacker, Constants.ERRORNOTTANK);
+                                            } else {
+                                                ((Minion) cardAttacker)
+                                                                .setAttacked(Constants.HASATACKED);
+                                                Minion.usePower(cardAttacker, cardAttacked);
+                                            }
+                                        } else {
+                                            Minion.usePower(cardAttacker, cardAttacked);
+                                            ((Minion) cardAttacker)
+                                                                .setAttacked(Constants.HASATACKED);
+                                        }
+                                        clearDeadMinions();
+                                    } else {
+                                        Commands.printUseAbilityErrors(output, node, attacked,
+                                                attacker, Constants.ERRORCANNOTATACKFRIENDLY);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             default -> {
@@ -282,10 +339,7 @@ public final class GameWorkFlow {
     public void updatePlayerTurn() {
         count++;
         table.unfreezeMinions(turn);
-        table.removeDeadMinions(table.getRowOnePlayerOne());
-        table.removeDeadMinions(table.getRowOnePlayerTwo());
-        table.removeDeadMinions(table.getRowTwoPlayerOne());
-        table.removeDeadMinions(table.getRowTwoPlayerTwo());
+        clearDeadMinions();
         table.makeMinionsAbleToAttack(turn);
         if (turn == 1) {
             turn = 2;
@@ -332,5 +386,12 @@ public final class GameWorkFlow {
             return false;
         }
         return true;
+    }
+
+    public void clearDeadMinions() {
+        table.removeDeadMinions(table.getRowOnePlayerOne());
+        table.removeDeadMinions(table.getRowOnePlayerTwo());
+        table.removeDeadMinions(table.getRowTwoPlayerOne());
+        table.removeDeadMinions(table.getRowTwoPlayerTwo());
     }
 }

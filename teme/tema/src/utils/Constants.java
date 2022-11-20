@@ -18,8 +18,7 @@ public final class Constants {
     public static final String USEENVCARD = "useEnvironmentCard";
     public static final String GETFROZENCARDS = "getFrozenCardsOnTable";
     public static final String USEATTACK = "cardUsesAttack";
-    public static final String ERRORALREADYATTACKED =
-            "Attacker card has already attacked this turn.";
+    public static final String USEABILITY = "cardUsesAbility";
     public static final String ERRORATACKERFROZEN = "Attacker card is frozen.";
     public static final String ERRORNOTTANK = "Attacked card is not of type 'Tank'.";
     public static final String ERRORNOTFOUND = "No card available at that position.";
@@ -79,6 +78,10 @@ public final class Constants {
                                     "Cannot steal enemy card since the player's row is full.";
     public static final String ERRORCANNOTATACKFRIENDLY =
             "Attacked card does not belong to the enemy.";
+    public static final String ERRORNOTFRIENDLYCARD =
+                                        "Attacked card does not belong to the current player.";
+    public static final String ERRORALREADYATTACKED =
+            "Attacker card has already attacked this turn.";
     public static final int STATUSOK = 0;
     public static final int ERRORSTATUS = 1;
 

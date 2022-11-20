@@ -35,8 +35,29 @@ public final class Minion extends Card {
         }
     }
 
-    public void usePower() {
-
+    public static void usePower(final Card attacker, final Card attacked) {
+        switch (attacker.getPower()) {
+            case (Constants.WEAKKNEES) -> {
+                attacked.getInstance().setAttackDamage(attacked.getInstance().getAttackDamage()
+                                                                                - Constants.TWO);
+            }
+            case (Constants.SKYJACK) -> {
+                int aux = attacker.getInstance().getHealth();
+                attacker.getInstance().setHealth(attacked.getInstance().getHealth());
+                attacked.getInstance().setHealth(aux);
+            }
+            case (Constants.SHAPESHIFT) -> {
+                int aux = attacked.getInstance().getHealth();
+                attacked.getInstance().setHealth(attacked.getInstance().getAttackDamage());
+                attacked.getInstance().setAttackDamage(aux);
+            }
+            case (Constants.GODSPLAN) -> {
+                attacked.getInstance().setHealth(attacked.getInstance().getHealth()
+                                                                                + Constants.TWO);
+            }
+            default -> {
+            }
+        }
     }
 
     private void setPower(final String power) {
