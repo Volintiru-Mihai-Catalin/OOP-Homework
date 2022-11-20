@@ -93,6 +93,7 @@ public final class GameWorkFlow {
     }
 
     private void performAction(final ActionsInput action, final ArrayNode output) {
+        clearDeadMinions();
         ObjectNode node = MAPPER.createObjectNode();
         switch (action.getCommand()) {
             case (Constants.GETPLAYERDECK) -> {
@@ -457,7 +458,7 @@ public final class GameWorkFlow {
             if (mana < Constants.MAXMANA) {
                 mana++;
             }
-
+            clearDeadMinions();
             playerOne.addMana(mana);
             playerTwo.addMana(mana);
             playerOne.addCardToHandFromDeck();
