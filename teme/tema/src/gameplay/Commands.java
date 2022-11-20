@@ -244,4 +244,39 @@ public final class Commands {
         output.add(node);
     }
 
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param attacker the card that is attacking
+     * @param error the error
+     */
+    public static void printAttackHeroErrors(final ArrayNode output, final ObjectNode node,
+                                             final Coordinates attacker, final String error) {
+
+        node.put("command", Constants.ATTACKHERO);
+        ObjectNode attackerNode = MAPPER.createObjectNode();
+        attackerNode.put("x", attacker.getX());
+        attackerNode.put("y", attacker.getY());
+        node.set("cardAttacker", attackerNode);
+        node.put("error", error);
+        output.add(node);
+    }
+
+    /**
+     *
+     * @param output the output json object
+     * @param node the node json object
+     * @param playerIdx the player that won the game
+     */
+    public static void printEnfOfGame(final ArrayNode output, final ObjectNode node,
+                                                                final int playerIdx) {
+        if (playerIdx == 1) {
+            node.put("gameEnded", "Player " + Constants.PLAYERONE + " killed the enemy hero.");
+        } else {
+            node.put("gameEnded", "Player " + Constants.PLAYERTWO + " killed the enemy hero.");
+        }
+        output.add(node);
+    }
+
 }

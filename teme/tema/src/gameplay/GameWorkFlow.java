@@ -31,6 +31,7 @@ public final class GameWorkFlow {
 
     private static int enemy = 0;
     private static int mana = 0;
+    private static boolean gameEnded = false;
     public GameWorkFlow(final Input inputData) {
         this.inputData = inputData;
         gameInput = inputData.getGames();
@@ -82,6 +83,7 @@ public final class GameWorkFlow {
 
         table = new Table();
         count = 0;
+        gameEnded = false;
     }
 
     private void performAction(final ActionsInput action, final ArrayNode output) {
@@ -101,6 +103,9 @@ public final class GameWorkFlow {
                 output.add(node);
             }
             case (Constants.ENDPLAYERTURN) -> {
+                if (gameEnded) {
+                    break;
+                }
                 updatePlayerTurn();
                 updateRound();
             }
@@ -109,6 +114,9 @@ public final class GameWorkFlow {
                                             getCardsInHand(action.getPlayerIdx()));
             }
             case (Constants.PLACECARD) -> {
+                if (gameEnded) {
+                    break;
+                }
                 Card cardToBePlayed = getCard(action.getHandIdx());
                 if (cardToBePlayed != null) {
                     if (cardToBePlayed.getAttribute().compareTo(Constants.MINION) == 0) {
@@ -151,6 +159,9 @@ public final class GameWorkFlow {
                 }
             }
             case (Constants.USEENVCARD) -> {
+                if (gameEnded) {
+                    break;
+                }
                 Card cardToBePlayed = getCard(action.getHandIdx());
                 if (cardToBePlayed != null) {
                     if (cardToBePlayed.getAttribute().compareTo(Constants.ENVIRONMENT) == 0) {
@@ -189,6 +200,9 @@ public final class GameWorkFlow {
                 Commands.printFrozenCards(output, node, table);
             }
             case (Constants.USEATTACK) -> {
+                if (gameEnded) {
+                    break;
+                }
                 Coordinates attacked = action.getCardAttacked();
                 Coordinates attacker = action.getCardAttacker();
                 if (checkRow(attacked.getX())) {
@@ -234,6 +248,9 @@ public final class GameWorkFlow {
                 }
             }
             case (Constants.USEABILITY) -> {
+                if (gameEnded) {
+                    break;
+                }
                 Coordinates attacked = action.getCardAttacked();
                 Coordinates attacker = action.getCardAttacker();
                 Card cardAttacker = table.getCardAtPosition(attacker.getX(), attacker.getY());
@@ -285,6 +302,33 @@ public final class GameWorkFlow {
                                                 attacker, Constants.ERRORCANNOTATACKFRIENDLY);
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+            case (Constants.ATTACKHERO) -> {
+                if (gameEnded) {
+                    break;
+                }
+                Coordinates attacker = action.getCardAttacker();
+                Card cardAttacker = table.getCardAtPosition(attacker.getX(), attacker.getY());
+                if (cardAttacker != null) {
+                    if (cardAttacker.isFrozen()) {
+                        Commands.printAttackHeroErrors(output, node, attacker,
+                                Constants.ERRORATACKERFROZEN);
+                    } else {
+                        if (((Minion) cardAttacker).hasAttacked()) {
+                            Commands.printAttackHeroErrors(output, node, attacker,
+                                    Constants.ERRORALREADYATTACKED);
+                        } else {
+                            if (table.hasTank(enemy)) {
+                                Commands.printAttackHeroErrors(output, node, attacker,
+                                        Constants.ERRORNOTTANK);
+                            } else {
+                                ((Minion) cardAttacker)
+                                        .setAttacked(Constants.HASATACKED);
+                                attackEnemyHero(output, node, cardAttacker);
                             }
                         }
                     }
@@ -394,5 +438,21 @@ public final class GameWorkFlow {
         table.removeDeadMinions(table.getRowOnePlayerTwo());
         table.removeDeadMinions(table.getRowTwoPlayerOne());
         table.removeDeadMinions(table.getRowTwoPlayerTwo());
+    }
+
+    public void attackEnemyHero(final ArrayNode output, final ObjectNode node, Card attacker) {
+        Card hero;
+        if (enemy == 1) {
+            hero = playerOne.getHero().get(0);
+
+        } else {
+            hero = playerTwo.getHero().get(0);
+        }
+        hero.getInstance().setHealth(hero.getInstance().getHealth()
+                - attacker.getInstance().getAttackDamage());
+        if (hero.getInstance().getHealth() <= 0) {
+            gameEnded = true;
+            Commands.printEnfOfGame(output, node, turn);
+        }
     }
 }

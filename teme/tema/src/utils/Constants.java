@@ -19,9 +19,8 @@ public final class Constants {
     public static final String GETFROZENCARDS = "getFrozenCardsOnTable";
     public static final String USEATTACK = "cardUsesAttack";
     public static final String USEABILITY = "cardUsesAbility";
-    public static final String ERRORATACKERFROZEN = "Attacker card is frozen.";
-    public static final String ERRORNOTTANK = "Attacked card is not of type 'Tank'.";
-    public static final String ERRORNOTFOUND = "No card available at that position.";
+    public static final String ATTACKHERO = "useAttackHero";
+
 
     // Card types
     public static final String MINION = "Minion";
@@ -61,12 +60,6 @@ public final class Constants {
     public static final String EARTHBORN = "Earth Born";
     public static final String BLOODTHIRST = "Blood Thirst";
 
-    // Rows
-    public static final Integer FIRSTROW = 1;
-    public static final Integer SECONDROW = 2;
-    public static final Integer HEROROW = 0;
-    public static final Integer ENVROW = -1;
-
     // Errors
     public static final String ERRORENVONTABLE = "Cannot place environment card on table.";
     public static final String ERRORNOTENOUGHMANA = "Not enough mana to place card on table.";
@@ -82,10 +75,13 @@ public final class Constants {
                                         "Attacked card does not belong to the current player.";
     public static final String ERRORALREADYATTACKED =
             "Attacker card has already attacked this turn.";
-    public static final int STATUSOK = 0;
-    public static final int ERRORSTATUS = 1;
+    public static final String ERRORATACKERFROZEN = "Attacker card is frozen.";
+    public static final String ERRORNOTTANK = "Attacked card is not of type 'Tank'.";
+    public static final String ERRORNOTFOUND = "No card available at that position.";
 
     // Gameplay constants
+    public static final String PLAYERONE = "one";
+    public static final String PLAYERTWO = "two";
     public static final Integer HEROHP = 30;
     public static final Integer MAXMANA = 10;
     public static final Integer MAXCARDS = 5;

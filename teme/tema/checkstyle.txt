@@ -22,10 +22,12 @@ Starting audit...
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Table.java:204:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Table.java:224:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameobjects\Table.java:252:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:39:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:87:5: Method length is 210 lines (max allowed is 150). [MethodLength]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:340:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:354:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:392:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:40:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:89:5: Method length is 252 lines (max allowed is 150). [MethodLength]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:384:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:398:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:436:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:443:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] C:\Users\Voli\Desktop\Tema POO\oop-asignments\teme\tema\.\src\gameplay\GameWorkFlow.java:443:80: Parameter attacker should be final. [FinalParameters]
 Audit done.
-Checkstyle ends with 28 errors.
+Checkstyle ends with 30 errors.
