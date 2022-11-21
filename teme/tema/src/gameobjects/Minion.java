@@ -35,6 +35,11 @@ public final class Minion extends Card {
         }
     }
 
+    /**
+     *
+     * @param attacker the card that will attack
+     * @param attacked the card that will be attacked
+     */
     public static void usePower(final Card attacker, final Card attacked) {
         switch (attacker.getPower()) {
             case (Constants.WEAKKNEES) -> {
@@ -91,6 +96,10 @@ public final class Minion extends Card {
         this.attacked = attacked;
     }
 
+    /**
+     *
+     * @return boolean value -> true if the card has attacked this turn
+     */
     public boolean hasAttacked() {
         return this.attacked;
     }

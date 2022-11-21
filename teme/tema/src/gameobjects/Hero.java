@@ -57,15 +57,20 @@ public final class Hero extends Card {
         return false;
     }
 
+    /**
+     *
+     * @param row the row where to use the power
+     * @param table the table instance
+     */
     public void usePower(final ArrayList<Card> row, final Table table) {
         switch (getPower()) {
             case (Constants.SUBZERO) -> {
                 int maxAttack = 0;
                 Card targetCard = null;
-                for (Card card : row) {
-                    if (card.getInstance().getHealth() > maxAttack) {
-                        maxAttack = card.getInstance().getHealth();
-                        targetCard = card;
+                for (Card cardInRow : row) {
+                    if (cardInRow.getInstance().getHealth() > maxAttack) {
+                        maxAttack = cardInRow.getInstance().getHealth();
+                        targetCard = cardInRow;
                     }
                 }
                 if (targetCard != null) {
@@ -75,10 +80,10 @@ public final class Hero extends Card {
             case (Constants.LOWBLOW) -> {
                 int maxAttack = 0;
                 Card targetCard = null;
-                for (Card card : row) {
-                    if (card.getInstance().getHealth() > maxAttack) {
-                        maxAttack = card.getInstance().getHealth();
-                        targetCard = card;
+                for (Card cardInRow : row) {
+                    if (cardInRow.getInstance().getHealth() > maxAttack) {
+                        maxAttack = cardInRow.getInstance().getHealth();
+                        targetCard = cardInRow;
                     }
                 }
                 if (targetCard != null) {
@@ -87,14 +92,15 @@ public final class Hero extends Card {
                 }
             }
             case (Constants.EARTHBORN) -> {
-                for (Card card : row) {
-                    card.getInstance().setHealth(card.getInstance().getHealth() + Constants.ONE);
+                for (Card cardInRow : row) {
+                    cardInRow.getInstance().setHealth(cardInRow.getInstance().getHealth()
+                                                                                + Constants.ONE);
                 }
             }
             case (Constants.BLOODTHIRST) -> {
-                for (Card card : row) {
-                    card.getInstance().setAttackDamage(card.getInstance().getAttackDamage() +
-                                                                                    Constants.ONE);
+                for (Card cardInRow : row) {
+                    cardInRow.getInstance().setAttackDamage(cardInRow.getInstance()
+                            .getAttackDamage() + Constants.ONE);
                 }
             }
             default -> {

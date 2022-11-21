@@ -44,6 +44,11 @@ public final class Environment extends Card {
         return false;
     }
 
+    /**
+     *
+     * @param row the row where to use the power
+     * @param table the table instance
+     */
     public void usePower(final ArrayList<Card> row, final Table table) {
         switch (card.getName()) {
             case (Constants.WINTERFELL) -> {

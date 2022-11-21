@@ -18,9 +18,19 @@ public final class Player {
         this.hero = hero;
     }
 
+    /**
+     *
+     * @param seed the seed to shuffle the deck
+     */
     public void shuffleDeck(final int seed) {
         Collections.shuffle(deck, new Random(seed));
     }
+
+    /**
+     *
+     * @param cardIdx the index of the card
+     * @return the card that has been taken
+     */
     public Card takeCardFromHand(final int cardIdx) {
         if (hand.size() <= cardIdx) {
             return null;
@@ -32,6 +42,9 @@ public final class Player {
         return card;
     }
 
+    /**
+     * Function to draw a card
+     */
     public void addCardToHandFromDeck() {
         Card card;
         if (deck.size() > 0) {
@@ -41,6 +54,11 @@ public final class Player {
         }
     }
 
+    /**
+     * Function to put the card back in deck if the player can't play it
+     * @param card card instance
+     * @param handIdx the index in hand
+     */
     public void remakeHandAndDeck(final Card card, final int handIdx) {
         hand.add(handIdx, card);
         mana += card.getInstance().getMana();
@@ -50,6 +68,10 @@ public final class Player {
         return deck;
     }
 
+    /**
+     *
+     * @return all the cards that have Environment attribute
+     */
     public ArrayList<Card> getEnvCardsInHand() {
         ArrayList<Card> env = new ArrayList<>();
         for (Card card : hand) {
@@ -72,10 +94,19 @@ public final class Player {
         return mana;
     }
 
+    /**
+     *
+     * @param manaAmount the amount of mana to be added to a player
+     */
     public void addMana(final int manaAmount) {
         mana += manaAmount;
     }
 
+    /**
+     *
+     * @param handIdx index of the card
+     * @return the card
+     */
     public Card getCard(final int handIdx) {
         if (hand.size() <= handIdx) {
             return null;

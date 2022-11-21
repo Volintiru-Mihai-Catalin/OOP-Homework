@@ -41,6 +41,10 @@ public final class GameWorkFlow {
         gameInput = inputData.getGames();
     }
 
+    /**
+     * Function to start a game
+     * @param output the output json object
+     */
     public void startAllGames(final ArrayNode output) {
         playerOneWins = 0;
         playerTwoWins = 0;
@@ -437,6 +441,9 @@ public final class GameWorkFlow {
         return playerTwo.getCard(cardIdx);
     }
 
+    /**
+     * Function to update player turn
+     */
     public void updatePlayerTurn() {
         count++;
         table.unfreezeMinions(turn);
@@ -453,6 +460,9 @@ public final class GameWorkFlow {
         }
     }
 
+    /**
+     * Function to update round
+     */
     public void updateRound() {
         if (count % 2 == 0) {
             if (mana < Constants.MAXMANA) {
@@ -500,6 +510,9 @@ public final class GameWorkFlow {
         return true;
     }
 
+    /**
+     * Function to clear all dead minions from board
+     */
     public void clearDeadMinions() {
         table.removeDeadMinions(table.getRowOnePlayerOne());
         table.removeDeadMinions(table.getRowOnePlayerTwo());
@@ -507,7 +520,14 @@ public final class GameWorkFlow {
         table.removeDeadMinions(table.getRowTwoPlayerTwo());
     }
 
-    public void attackEnemyHero(final ArrayNode output, final ObjectNode node, Card attacker) {
+    /**
+     * Function to attack the enemy hero
+     * @param output the output
+     * @param node the node
+     * @param attacker attacker card
+     */
+    public void attackEnemyHero(final ArrayNode output, final ObjectNode node,
+                                                                    final Card attacker) {
         Card hero;
         if (enemy == 1) {
             hero = playerOne.getHero().get(0);
@@ -528,6 +548,10 @@ public final class GameWorkFlow {
         }
     }
 
+    /**
+     *
+     * @return the hero of this player's turn
+     */
     public Card getHero() {
         if (turn == 1) {
             return playerOne.getHero().get(0);

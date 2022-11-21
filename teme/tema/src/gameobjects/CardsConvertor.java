@@ -10,6 +10,12 @@ public final class CardsConvertor {
     private CardsConvertor() {
 
     }
+
+    /**
+     *
+     * @param cardsInput the list of cards to be converted
+     * @return an array list of a wrapper type Card that has more info about the card
+     */
     public static ArrayList<Card> convertCards(final ArrayList<CardInput> cardsInput) {
 
         ArrayList<Card> cardsArrayList = new ArrayList<Card>();

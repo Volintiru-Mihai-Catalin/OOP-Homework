@@ -30,6 +30,13 @@ public final class Table {
         return rowTwoPlayerTwo;
     }
 
+
+    /**
+     *
+     * @param card the card instance
+     * @param playerIdx player index
+     * @return true if the card can be played
+     */
     public boolean playCard(final Card card, final int playerIdx) {
         if (card.getAttribute().compareTo(Constants.MINION) == 0) {
             if (playerIdx == 1) {
@@ -70,6 +77,12 @@ public final class Table {
         return false;
     }
 
+    /**
+     *
+     * @param x coordinate
+     * @param y coordinate
+     * @return the card at the given location
+     */
     public Card getCardAtPosition(final int x, final int y) {
 
         switch (x) {
@@ -101,6 +114,11 @@ public final class Table {
         return null;
     }
 
+    /**
+     *
+     * @param card the card instance
+     * @param rowIdx row index
+     */
     public void useEnvCardOnRow(final Card card, final int rowIdx) {
         switch (rowIdx) {
             case (Constants.ZERO) -> ((Environment) card).usePower(rowOnePlayerTwo, this);
@@ -112,6 +130,11 @@ public final class Table {
         }
     }
 
+    /**
+     * Function to steal card with Hearth Hound
+     * @param row row index
+     * @param card card to steal
+     */
     public void stealCardFromRow(final ArrayList<Card> row, final Card card) {
         if (card != null) {
             ArrayList<Card> mirrorRow = null;
@@ -134,10 +157,18 @@ public final class Table {
         }
     }
 
+    /**
+     *
+     * @param row the row
+     */
     public void removeDeadMinions(final ArrayList<Card> row) {
         row.removeIf(card -> card.getInstance().getHealth() < 1);
     }
 
+    /**
+     *
+     * @param playerIdx the player index
+     */
     public void unfreezeMinions(final int playerIdx) {
 
         if (playerIdx == 1) {
@@ -158,6 +189,10 @@ public final class Table {
 
     }
 
+    /**
+     *
+     * @return all frozen cards
+     */
     public ArrayList<Card> getFrozenCards() {
         ArrayList<Card> frozenCards = new ArrayList<>();
         for (Card card : rowOnePlayerTwo) {
@@ -187,6 +222,11 @@ public final class Table {
         return frozenCards;
     }
 
+    /**
+     * Function to get the mirror row
+     * @param row
+     * @return index of mirror row
+     */
     public int getMirrorRow(final int row) {
         if (row == Constants.ZERO) {
             return Constants.THREE;
@@ -201,6 +241,11 @@ public final class Table {
         return 0;
     }
 
+    /**
+     *
+     * @param row the row
+     * @return true if the row is full
+     */
     public boolean isRowNotFull(final int row) {
         switch (row) {
             case (Constants.ZERO) -> {
@@ -221,6 +266,11 @@ public final class Table {
         }
     }
 
+    /**
+     *
+     * @param playerIdx player index
+     * @return true if the player has at least one tank card
+     */
     public boolean hasTank(final int playerIdx) {
         if (playerIdx == 1) {
             for (Card card : rowTwoPlayerOne) {
@@ -249,6 +299,10 @@ public final class Table {
         return false;
     }
 
+    /**
+     * Function to make minions able to attack at the end of a turn
+     * @param playerIdx player index
+     */
     public void makeMinionsAbleToAttack(final int playerIdx) {
         if (playerIdx == 1) {
             for (Card card : rowTwoPlayerOne) {
@@ -267,6 +321,11 @@ public final class Table {
         }
     }
 
+    /**
+     *
+     * @param hero hero card
+     * @param rowIdx row index
+     */
     public void useHeroPowerOnRow(final Card hero, final int rowIdx) {
         switch (rowIdx) {
             case (Constants.ZERO) -> ((Hero) hero).usePower(rowOnePlayerTwo, this);
